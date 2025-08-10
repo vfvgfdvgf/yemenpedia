@@ -1,0 +1,540 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سياسة الخصوصية - يمنبيديا</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #000;
+            --secondary-color: #fff;
+            --accent-color: #007aff;
+            --text-color: #1d1d1f;
+            --light-gray: #f5f5f7;
+            --dark-gray: #86868b;
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Tajawal', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            line-height: 1.8;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* الهيدر */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 5%;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+            transition: var(--transition);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.03);
+        }
+        
+        header.scrolled {
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+            padding: 8px 5%;
+        }
+        
+        .logo a {
+            color: var(--primary-color);
+            font-size: 1.6rem;
+            font-weight: 800;
+            text-decoration: none;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo i {
+            color: var(--accent-color);
+            font-size: 1.8rem;
+        }
+        
+        nav {
+            display: flex;
+            align-items: center;
+        }
+        
+        nav a {
+            margin: 0 18px;
+            text-decoration: none;
+            color: var(--primary-color);
+            font-weight: 600;
+            font-size: 1.05rem;
+            transition: var(--transition);
+            position: relative;
+            padding: 8px 0;
+        }
+        
+        nav a:hover {
+            color: var(--accent-color);
+        }
+        
+        nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 3px;
+            bottom: 0;
+            right: 0;
+            background-color: var(--accent-color);
+            transition: var(--transition);
+            border-radius: 3px;
+        }
+        
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* محتوى الصفحة */
+        .privacy-container {
+            max-width: 1000px;
+            margin: 120px auto 80px;
+            padding: 0 5%;
+        }
+        
+        .privacy-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .privacy-header h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+        
+        .privacy-header p {
+            font-size: 1.2rem;
+            color: var(--dark-gray);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .privacy-content {
+            background: var(--secondary-color);
+            border-radius: 16px;
+            padding: 50px;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.07);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+        }
+        
+        .privacy-section {
+            margin-bottom: 40px;
+        }
+        
+        .privacy-section h2 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--accent-color);
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .privacy-section h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--accent-color);
+        }
+        
+        .privacy-section p {
+            margin-bottom: 15px;
+            font-size: 1.05rem;
+            line-height: 1.9;
+        }
+        
+        .privacy-section ul {
+            margin: 20px 0;
+            padding-right: 20px;
+        }
+        
+        .privacy-section li {
+            margin-bottom: 10px;
+            position: relative;
+            padding-right: 20px;
+        }
+        
+        .privacy-section li::before {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 12px;
+            width: 8px;
+            height: 8px;
+            background-color: var(--accent-color);
+            border-radius: 50%;
+        }
+        
+        .last-updated {
+            text-align: center;
+            font-style: italic;
+            color: var(--dark-gray);
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        /* الفوتر */
+        footer {
+            background: var(--primary-color);
+            color: var(--secondary-color);
+            padding: 80px 5% 40px;
+            margin-top: 100px;
+            position: relative;
+        }
+        
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 10px;
+            background: linear-gradient(to right, var(--accent-color), #0062cc);
+        }
+        
+        .footer-content {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 50px;
+        }
+        
+        .footer-col {
+            margin-bottom: 30px;
+        }
+        
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .footer-logo i {
+            color: var(--accent-color);
+            font-size: 2rem;
+        }
+        
+        .footer-about {
+            font-size: 1rem;
+            line-height: 1.8;
+            opacity: 0.8;
+            margin-bottom: 25px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+        
+        .social-links a:hover {
+            background: var(--accent-color);
+            transform: translateY(-3px);
+        }
+        
+        .footer-links h5 {
+            font-size: 1.3rem;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .footer-links h5::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--accent-color);
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 15px;
+        }
+        
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 1rem;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent-color);
+            padding-right: 5px;
+        }
+        
+        .footer-links a i {
+            font-size: 0.8rem;
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 70px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.95rem;
+        }
+        
+        /* التجاوب */
+        @media (max-width: 768px) {
+            header {
+                padding: 12px 5%;
+            }
+            
+            .logo a {
+                font-size: 1.4rem;
+            }
+            
+            nav {
+                display: none;
+            }
+            
+            .privacy-container {
+                margin-top: 100px;
+            }
+            
+            .privacy-header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .privacy-content {
+                padding: 30px;
+            }
+            
+            .privacy-section h2 {
+                font-size: 1.5rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .privacy-header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .privacy-content {
+                padding: 25px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- الهيدر -->
+    <header id="header">
+        <div class="logo">
+            <a href="{% url 'articles:article_list' %}">
+                <i class="fas fa-book-open"></i> يمنبيديا
+            </a>
+        </div>
+        <nav>
+            <a href="{% url 'articles:article_list' %}">الرئيسية</a>
+            <a href="{% url 'articles:categories_list' %}">التصنيفات</a>
+            <a href="/about/">من نحن</a>
+            <a href="/contact/">اتصل بنا</a>
+            <a href="/privacy-policy/" class="active">الخصوصية</a>
+        </nav>
+    </header>
+
+    <!-- محتوى الصفحة -->
+    <main class="privacy-container">
+        <div class="privacy-header">
+            <h1>سياسة الخصوصية</h1>
+            <p>نحن في يمنبيديا نحرص على خصوصيتك ونلتزم بحماية بياناتك الشخصية. هذه السياسة توضح كيفية جمعنا واستخدامنا لمعلوماتك.</p>
+        </div>
+        
+        <div class="privacy-content">
+            <div class="privacy-section">
+                <h2>1. المعلومات التي نجمعها</h2>
+                <p>قد نجمع الأنواع التالية من المعلومات:</p>
+                <ul>
+                    <li>المعلومات التي تقدمها عند التسجيل أو إنشاء حساب</li>
+                    <li>معلومات الاتصال بما في ذلك عنوان البريد الإلكتروني</li>
+                    <li>المعلومات الفنية مثل عنوان IP ونوع المتصفح</li>
+                    <li>بيانات الاستخدام مثل الصفحات التي تزورها ومدة الزيارة</li>
+                </ul>
+            </div>
+            
+            <div class="privacy-section">
+                <h2>2. كيفية استخدامنا للمعلومات</h2>
+                <p>نستخدم المعلومات التي نجمعها للأغراض التالية:</p>
+                <ul>
+                    <li>توفير وتخصيص خدماتنا</li>
+                    <li>تحسين جودة المحتوى والتجربة العامة</li>
+                    <li>الرد على استفساراتك وطلباتك</li>
+                    <li>إرسال تحديثات وإشعارات مهمة</li>
+                    <li>منع الاحتيال وحماية أمن الموقع</li>
+                </ul>
+            </div>
+            
+            <div class="privacy-section">
+                <h2>3. مشاركة المعلومات</h2>
+                <p>لا نبيع أو نؤجر معلوماتك الشخصية لأطراف ثالثة. قد نشارك المعلومات في الحالات التالية:</p>
+                <ul>
+                    <li>مع موفري الخدمات الذين يعملون نيابة عنا بموجب اتفاقيات سرية</li>
+                    <li>عندما يكون ذلك مطلوبًا بموجب القانون أو استجابة لطلب حكومي</li>
+                    <li>في حالة اندماج أو استحواذ على الشركة</li>
+                </ul>
+            </div>
+            
+            <div class="privacy-section">
+                <h2>4. حماية البيانات</h2>
+                <p>نحن نستخدم إجراءات أمنية فنية وإدارية معقولة لحماية معلوماتك من الوصول غير المصرح به أو التغيير أو الإفشاء أو التدمير. ومع ذلك، لا يمكن ضمان أمان الإنترنت بنسبة 100%.</p>
+            </div>
+            
+            <div class="privacy-section">
+                <h2>5. ملفات تعريف الارتباط (Cookies)</h2>
+                <p>نستخدم ملفات تعريف الارتباط لتخصيص المحتوى وتحليل الزيارات. يمكنك ضبط متصفحك لرفض جميع ملفات تعريف الارتباط أو للإشارة عند إرسالها.</p>
+            </div>
+            
+            <div class="privacy-section">
+                <h2>6. حقوقك</h2>
+                <p>لديك الحق في:</p>
+                <ul>
+                    <li>الوصول إلى معلوماتك الشخصية التي نحتفظ بها</li>
+                    <li>طلب تصحيح المعلومات غير الدقيقة</li>
+                    <li>طلب حذف معلوماتك الشخصية في ظروف معينة</li>
+                    <li>اعتراض معالجة بياناتك في حالات محددة</li>
+                </ul>
+            </div>
+            
+            <div class="privacy-section">
+                <h2>7. التغييرات على السياسة</h2>
+                <p>قد نقوم بتحديث هذه السياسة من وقت لآخر. سننشر أي تغييرات على هذه الصفحة ونخطرك عبر البريد الإلكتروني إذا كانت التغييرات جوهرية.</p>
+            </div>
+            
+            <div class="last-updated">
+                <p>آخر تحديث: 10 أغسطس 2023</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- الفوتر -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-col">
+                <div class="footer-logo"><i class="fas fa-book-open"></i> يمنبيديا</div>
+                <p class="footer-about">منصة معرفية تهدف إلى توثيق ونشر المعلومات الدقيقة عن اليمن في جميع المجالات، نقدم محتوى موثوقًا وشموليًا يخدم الباحثين والقارئين.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            
+                   <div class="footer-col">
+                <div class="footer-links">
+                    <h5>روابط سريعة</h5>
+                    <ul>
+                        <li><a href="/"><i class="fas fa-chevron-left"></i> الرئيسية</a></li>
+                        <li><a href="/"><i class="fas fa-chevron-left"></i> جميع المقالات</a></li>
+                        <li><a href="/about/"><i class="fas fa-chevron-left"></i> عن الموسوعة</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-col">
+                <div class="footer-links">
+                    <h5>المساعدة</h5>
+                    <ul>
+                        <li><a href="/contact/"><i class="fas fa-chevron-left"></i> اتصل بنا</a></li>
+                        <li><a href="/faq/"><i class="fas fa-chevron-left"></i> الأسئلة الشائعة</a></li>
+                        <li><a href="/privacy-policy/"><i class="fas fa-chevron-left"></i> سياسة الخصوصية</a></li>
+                        <li><a href="/terms/"><i class="fas fa-chevron-left"></i> شروط الاستخدام</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-col">
+                <div class="footer-links">
+                    <h5>المشاركة</h5>
+                    <ul>
+                        <li><a href="/contact/"><i class="fas fa-chevron-left"></i> المساهمة معنا</a></li>
+                        <li><a href="/contact/"><i class="fas fa-chevron-left"></i> إرسال مقال</a></li>
+                        <li><a href="/contact/"><i class="fas fa-chevron-left"></i> الإبلاغ عن خطأ</a></li>
+                        <li><a href="/contact/"><i class="fas fa-chevron-left"></i> دعم الموسوعة</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div> 
+        <div class="copyright">
+            &copy; <span id="year"></span> يمنبيديا. جميع الحقوق محفوظة.
+        </div>
+    </footer>
+
+    <script>
+        // تأثير الهيدر عند التمرير
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+        
+        // تحميل الصفحة بسلاسة
+        document.body.style.opacity = '0';
+        window.addEventListener('DOMContentLoaded', function() {
+            document.body.style.transition = 'opacity 0.5s ease';
+            document.body.style.opacity = '1';
+            
+            // تحديث سنة حقوق النشر
+            document.getElementById('year').textContent = new Date().getFullYear();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,139 @@
+{% load static %}
+
+{% block title %}
+    {% if search_query %}
+        نتائج البحث عن "{{ search_query }}" | الموسوعة اليمنية
+    {% else %}
+        المقالات | الموسوعة اليمنية
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <video autoplay muted loop playsinline>
+        <source src="{% static 'videos/yemen-bg.mp4' %}" type="video/mp4">
+        <img src="{% static 'images/yemen-bg-fallback.jpg' %}" alt="خلفية يمنية">
+    </video>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+        <h1>{% if search_query %}نتائج البحث{% else %}الموسوعة اليمنية{% endif %}</h1>
+        <div class="search-box">
+            <form method="GET" action="{% url 'articles:article_list' %}">
+                <input type="text" name="q" placeholder="ابحث عن مقالات..." value="{{ search_query|default:'' }}">
+                <button type="submit"><i class="fas fa-search"></i> بحث</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<div class="container articles-container">
+    {% if search_query %}
+        <div class="search-results-header">
+            <h2>نتائج البحث عن: <span>"{{ search_query }}"</span></h2>
+            <p class="results-count">{{ page_obj.paginator.count }} نتيجة وجدت</p>
+        </div>
+    {% endif %}
+
+    {% if category %}
+        <div class="category-header">
+            <h2>تصنيف: {{ category.name }}</h2>
+            <p>{{ category.description }}</p>
+        </div>
+    {% endif %}
+
+    <div class="articles-grid">
+        {% for article in page_obj %}
+            <article class="article-card">
+                <a href="{{ article.get_absolute_url }}" class="article-image">
+                    {% if article.image %}
+                        <img src="{{ article.image.url }}" alt="{{ article.title }}">
+                    {% else %}
+                        <img src="{% static 'images/article-default.jpg' %}" alt="صورة افتراضية">
+                    {% endif %}
+                </a>
+                <div class="article-body">
+                    <div class="article-meta">
+                        <span class="category-badge" style="background-color: {{ article.category.color }};">
+                            {{ article.category.name }}
+                        </span>
+                        <span class="article-date">
+                            <i class="far fa-calendar-alt"></i> {{ article.pub_date|date:"Y/m/d" }}
+                        </span>
+                    </div>
+                    <h3 class="article-title">
+                        <a href="{{ article.get_absolute_url }}">{{ article.title }}</a>
+                    </h3>
+                    <p class="article-excerpt">
+                        {{ article.summary|default:article.content|truncatewords:30 }}
+                    </p>
+                    <div class="article-footer">
+                        <span class="article-views">
+                            <i class="far fa-eye"></i> {{ article.views }} مشاهدة
+                        </span>
+                        <a href="{{ article.get_absolute_url }}" class="read-more">
+                            اقرأ المزيد <i class="fas fa-arrow-left"></i>
+                        </a>
+                    </div>
+                </div>
+            </article>
+        {% empty %}
+            <div class="no-results">
+                <img src="{% static 'images/no-results.svg' %}" alt="لا توجد نتائج" class="no-results-img">
+                <h3>لا توجد نتائج مطابقة</h3>
+                {% if search_query %}
+                    <p>لم نتمكن من العثور على أي مقالات تطابق بحثك "{{ search_query }}"</p>
+                {% else %}
+                    <p>لا توجد مقالات متاحة حاليًا في هذا التصنيف</p>
+                {% endif %}
+                <a href="{% url 'articles:article_list' %}" class="btn btn-primary">
+                    <i class="fas fa-home"></i> العودة للصفحة الرئيسية
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+
+    {% if page_obj.paginator.num_pages > 1 %}
+        <div class="pagination">
+            <ul class="pagination-list">
+                {% if page_obj.has_previous %}
+                    <li><a href="?page=1{% if search_query %}&q={{ search_query }}{% endif %}" class="pagination-first"><i class="fas fa-angle-double-right"></i></a></li>
+                    <li><a href="?page={{ page_obj.previous_page_number }}{% if search_query %}&q={{ search_query }}{% endif %}" class="pagination-prev"><i class="fas fa-angle-right"></i></a></li>
+                {% endif %}
+
+                {% for num in page_obj.paginator.page_range %}
+                    {% if page_obj.number == num %}
+                        <li><span class="pagination-current">{{ num }}</span></li>
+                    {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                        <li><a href="?page={{ num }}{% if search_query %}&q={{ search_query }}{% endif %}">{{ num }}</a></li>
+                    {% endif %}
+                {% endfor %}
+
+                {% if page_obj.has_next %}
+                    <li><a href="?page={{ page_obj.next_page_number }}{% if search_query %}&q={{ search_query }}{% endif %}" class="pagination-next"><i class="fas fa-angle-left"></i></a></li>
+                    <li><a href="?page={{ page_obj.paginator.num_pages }}{% if search_query %}&q={{ search_query }}{% endif %}" class="pagination-last"><i class="fas fa-angle-double-left"></i></a></li>
+                {% endif %}
+            </ul>
+        </div>
+    {% endif %}
+</div>
+
+{% if not search_query and not category %}
+<section class="categories-section">
+    <div class="container">
+        <h2 class="section-title">تصفح حسب التصنيف</h2>
+        <div class="categories-grid">
+            {% for cat in categories %}
+                <a href="{% url 'articles:category_articles' cat.slug %}" class="category-card">
+                    <div class="category-icon">
+                        <i class="{{ cat.icon_class|default:'fas fa-folder' }}"></i>
+                    </div>
+                    <h3>{{ cat.name }}</h3>
+                    <p>{{ cat.articles.count }} مقال</p>
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,1148 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ article.title }} - يمنبيديا</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #00695c;
+            --primary-light: #e0f2f1;
+            --text-color: #1d1d1f;
+            --light-gray: #f5f5f7;
+            --dark-gray: #86868b;
+            --white: #ffffff;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Tajawal', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--white);
+            color: var(--text-color);
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        /* الهيدر الذكي */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+        }
+        
+        .logo a {
+            color: var(--primary-color);
+            font-size: 1.6rem;
+            font-weight: 800;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo-icon {
+            font-size: 1.8rem;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 600;
+            font-size: 1.05rem;
+            transition: var(--transition);
+            position: relative;
+            padding: 8px 0;
+        }
+        
+        nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 3px;
+            bottom: 0;
+            right: 0;
+            background-color: var(--primary-color);
+            transition: var(--transition);
+        }
+        
+        nav a:hover,
+        nav a.active {
+            color: var(--primary-color);
+        }
+        
+        nav a:hover::after,
+        nav a.active::after {
+            width: 100%;
+        }
+
+        /* محتوى المقالة */
+        .article-container {
+            max-width: 1100px;
+            margin: 100px auto 60px;
+            padding: 0 5%;
+        }
+        
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 30px;
+            font-size: 0.95rem;
+        }
+        
+        .breadcrumb a {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .breadcrumb a:hover {
+            color: var(--text-color);
+        }
+        
+        .breadcrumb-separator {
+            color: var(--dark-gray);
+            font-size: 0.8rem;
+        }
+        
+        .article-header {
+            margin-bottom: 40px;
+        }
+        
+        .article-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            line-height: 1.3;
+            margin-bottom: 20px;
+            color: var(--text-color);
+        }
+        
+        .article-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            align-items: center;
+            color: var(--dark-gray);
+            font-size: 0.95rem;
+        }
+        
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .meta-item a {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .meta-item a:hover {
+            text-decoration: underline;
+        }
+        
+        .article-image {
+            margin: 40px 0;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        
+        .article-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+        
+        .article-image:hover img {
+            transform: scale(1.02);
+        }
+        
+        .image-caption {
+            text-align: center;
+            margin-top: 15px;
+            color: var(--dark-gray);
+            font-size: 0.9rem;
+        }
+        
+        .article-content {
+            font-size: 1.15rem;
+            line-height: 1.9;
+        }
+        
+        .article-content p {
+            margin-bottom: 30px;
+        }
+        
+        .article-content h2,
+        .article-content h3 {
+            margin: 40px 0 20px;
+            color: var(--primary-color);
+        }
+        
+        .article-content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            margin: 30px 0;
+            box-shadow: var(--shadow);
+        }
+        
+        .article-content blockquote {
+            border-right: 4px solid var(--primary-color);
+            padding: 20px 30px;
+            margin: 30px 0;
+            background: var(--light-gray);
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+        }
+        
+        /* الكلمات المفتاحية */
+        .article-tags {
+            margin: 50px 0;
+            padding-top: 30px;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        .tags-title {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .tags-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .tag {
+            display: inline-flex;
+            align-items: center;
+            background: var(--primary-light);
+            color: var(--primary-color);
+            padding: 8px 18px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: var(--transition);
+            gap: 8px;
+        }
+        
+        .tag:hover {
+            background: var(--primary-color);
+            color: var(--white);
+            transform: translateY(-2px);
+        }
+        
+        /* أزرار التفاعل */
+        .article-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 50px 0;
+            padding: 25px 0;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .action-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--light-gray);
+            border: none;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .action-btn:hover {
+            background: #e5e5e9;
+            transform: translateY(-2px);
+        }
+        
+        .action-btn.liked {
+            color: #d32f2f;
+        }
+        
+        .share-buttons {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .share-label {
+            font-size: 0.95rem;
+            color: var(--dark-gray);
+        }
+        
+        .share-btn {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 1rem;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .share-btn::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.1);
+            top: 0;
+            left: 0;
+            transform: translateY(100%);
+            transition: var(--transition);
+        }
+        
+        .share-btn:hover {
+            transform: translateY(-3px);
+        }
+        
+        .share-btn:hover::after {
+            transform: translateY(0);
+        }
+        
+        .facebook { background: #3b5998; }
+        .twitter { background: #1da1f2; }
+        .whatsapp { background: #25d366; }
+        .linkedin { background: #0077b5; }
+        
+        /* مقالات ذات صلة */
+        .related-articles {
+            margin: 80px 0;
+        }
+        
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 40px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), transparent);
+            border-radius: 2px;
+        }
+        
+        .related-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .related-card {
+            background: var(--white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .related-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+        }
+        
+        .related-image {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .related-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .related-card:hover .related-image img {
+            transform: scale(1.05);
+        }
+        
+        .related-content {
+            padding: 20px;
+        }
+        
+        .related-title {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+        
+        .related-title a {
+            color: var(--text-color);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .related-title a:hover {
+            color: var(--primary-color);
+        }
+        
+        .related-meta {
+            display: flex;
+            gap: 15px;
+            color: var(--dark-gray);
+            font-size: 0.85rem;
+        }
+        
+        /* التعليقات */
+        .comments-section {
+            margin: 80px 0;
+        }
+        
+        .comments-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .comments-count {
+            font-size: 1.1rem;
+            color: var(--dark-gray);
+        }
+        
+        .comments-list {
+            margin-bottom: 50px;
+        }
+        
+        .comment {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+        }
+        
+        .comment:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+        
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .comment-author {
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        
+        .comment-date {
+            color: var(--dark-gray);
+            font-size: 0.85rem;
+        }
+        
+        .comment-body {
+            line-height: 1.7;
+        }
+        
+        /* نموذج التعليق */
+        .comment-form {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .comment-form h3 {
+            font-size: 1.4rem;
+            margin-bottom: 25px;
+            color: var(--primary-color);
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 14px 18px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-family: 'Tajawal', sans-serif;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(0, 121, 107, 0.1);
+            outline: none;
+        }
+        
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .submit-btn {
+            background: var(--primary-color);
+            color: var(--white);
+            border: none;
+            padding: 14px 30px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .submit-btn:hover {
+            background: #004d40;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 121, 107, 0.2);
+        }
+
+        /* الفوتر المتطور */
+        footer {
+            background: #1d1d1f;
+            color: var(--white);
+            padding: 80px 5% 40px;
+            margin-top: 100px;
+        }
+        
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 50px;
+        }
+        
+        .footer-col {
+            margin-bottom: 30px;
+        }
+        
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .footer-logo i {
+            color: var(--primary-color);
+        }
+        
+        .footer-about {
+            line-height: 1.8;
+            opacity: 0.9;
+        }
+        
+        .footer-social {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+        
+        .social-link {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 1.1rem;
+            transition: var(--transition);
+        }
+        
+        .social-link:hover {
+            background: var(--primary-color);
+            transform: translateY(-3px);
+        }
+        
+        .footer-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .footer-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--primary-color);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 15px;
+        }
+        
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .footer-links a:hover {
+            color: var(--white);
+            padding-right: 5px;
+        }
+        
+        .footer-links a i {
+            color: var(--primary-color);
+            font-size: 0.9rem;
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 70px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+        
+        /* التجاوب مع الأجهزة */
+        @media (max-width: 992px) {
+            .article-title {
+                font-size: 2.2rem;
+            }
+            
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            header {
+                padding: 12px 5%;
+            }
+            
+            nav ul {
+                gap: 15px;
+            }
+            
+            .article-title {
+                font-size: 1.9rem;
+            }
+            
+            .article-meta {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .article-actions {
+                flex-direction: column;
+                gap: 20px;
+                align-items: flex-start;
+            }
+            
+            .share-buttons {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .footer-container {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .article-title {
+                font-size: 1.7rem;
+            }
+            
+            .related-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .action-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- الهيدر الذكي -->
+    <header>
+        <div class="logo">
+            <a href="/"><i class="fas fa-book-open logo-icon"></i> يمنبيديا</a>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="/" class="active">الرئيسية</a></li>
+                <li><a href="/categories/">التصنيفات</a></li>
+                <li><a href="/about/">من نحن</a></li>
+                <li><a href="/contact/">اتصل بنا</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- محتوى المقالة -->
+    <div class="article-container">
+        <!-- مسار التنقل -->
+        <div class="breadcrumb">
+            <a href="/"><i class="fas fa-home"></i> الرئيسية</a>
+            <span class="breadcrumb-separator">/</span>
+            {% if article.category %}
+            <a href="{% url 'articles:category_articles' article.category.slug %}">
+                <i class="fas fa-folder"></i> {{ article.category.name }}
+            </a>
+            <span class="breadcrumb-separator">/</span>
+            {% endif %}
+            <span>{{ article.title|truncatechars:30 }}</span>
+        </div>
+        
+        <!-- عنوان ومعلومات المقال -->
+        <div class="article-header">
+            <h1 class="article-title">{{ article.title }}</h1>
+            <div class="article-meta">
+                <div class="meta-item">
+                    <i class="fas fa-user"></i>
+                    <span>{{ article.author.username }}</span>
+                </div>
+                <div class="meta-item">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>{{ article.pub_date|date:"Y-m-d" }}</span>
+                </div>
+                <div class="meta-item">
+                    <i class="fas fa-eye"></i>
+                    <span>{{ article.views }} مشاهدة</span>
+                </div>
+                {% if article.category %}
+                <div class="meta-item">
+                    <i class="fas fa-tag"></i>
+                    <a href="{% url 'articles:category_articles' article.category.slug %}">{{ article.category.name }}</a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        
+        <!-- صورة المقال -->
+        {% if article.image %}
+        <div class="article-image">
+            <img src="{{ article.image.url }}" alt="{{ article.title }}">
+            {% if article.image_caption %}
+            <p class="image-caption">{{ article.image_caption }}</p>
+            {% endif %}
+        </div>
+        {% endif %}
+        
+        <!-- محتوى المقال -->
+        <div class="article-content">
+            {{ article.content|safe }}
+        </div>
+        
+        <!-- الكلمات المفتاحية -->
+        {% if article.tags.all %}
+        <div class="article-tags">
+            <h3 class="tags-title"><i class="fas fa-tags"></i> الكلمات المفتاحية</h3>
+            <div class="tags-list">
+                {% for tag in article.tags.all %}
+                <a href="{% url 'articles:articles_by_tag' tag.slug %}" class="tag">
+                    <i class="fas fa-hashtag"></i> {{ tag.name }}
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+        
+        <!-- أزرار التفاعل -->
+        <div class="article-actions">
+            <div class="action-buttons">
+                {% if user.is_authenticated %}
+                <button id="bookmark-btn" class="action-btn" data-article-id="{{ article.pk }}">
+                    <i class="far fa-bookmark"></i> 
+                    <span id="bookmark-text">حفظ المقال</span>
+                </button>
+                <button id="like-btn" class="action-btn" data-article-id="{{ article.pk }}">
+                    <i class="far fa-heart"></i> 
+                    <span class="like-count">{{ article.likes.count }}</span>
+                </button>
+                {% else %}
+                <a href="{% url 'login' %}?next={{ request.path }}" class="action-btn">
+                    <i class="fas fa-sign-in-alt"></i> سجل الدخول للتفاعل
+                </a>
+                {% endif %}
+            </div>
+            
+            <div class="share-buttons">
+                <span class="share-label">شارك المقال:</span>
+                <a href="#" class="share-btn facebook" data-platform="facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="share-btn twitter" data-platform="twitter"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="share-btn whatsapp" data-platform="whatsapp"><i class="fab fa-whatsapp"></i></a>
+                <a href="#" class="share-btn linkedin" data-platform="linkedin"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+        </div>
+        
+        <!-- مقالات ذات صلة -->
+        <div class="related-articles">
+            <h2 class="section-title">مقالات ذات صلة</h2>
+            <div class="related-grid">
+                {% for related in related_articles %}
+                <div class="related-card">
+                    {% if related.image %}
+                    <div class="related-image">
+                        <img src="{{ related.image.url }}" alt="{{ related.title }}">
+                    </div>
+                    {% endif %}
+                    <div class="related-content">
+                        <h3 class="related-title">
+                            <a href="{% url 'articles:article_detail' related.pk %}">{{ related.title }}</a>
+                        </h3>
+                        <div class="related-meta">
+                            <span><i class="far fa-calendar-alt"></i> {{ related.pub_date|date:"Y-m-d" }}</span>
+                            <span><i class="far fa-eye"></i> {{ related.views }}</span>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <p>لا توجد مقالات ذات صلة حالياً.</p>
+                {% endfor %}
+            </div>
+        </div>
+        
+        <!-- التعليقات -->
+        <div class="comments-section">
+            <div class="comments-header">
+                <h2 class="section-title">التعليقات</h2>
+                <span class="comments-count">{{ comments.count }} تعليق</span>
+            </div>
+            
+            <div class="comments-list">
+                {% for comment in comments %}
+                <div class="comment">
+                    <div class="comment-header">
+                        <span class="comment-author">{{ comment.name }}</span>
+                        <span class="comment-date">{{ comment.created|date:"Y-m-d H:i" }}</span>
+                    </div>
+                    <div class="comment-body">
+                        {{ comment.body|linebreaks }}
+                    </div>
+                </div>
+                {% empty %}
+                <div class="comment">
+                    <p>لا توجد تعليقات بعد. كن أول من يعلق!</p>
+                </div>
+                {% endfor %}
+            </div>
+            
+            <!-- نموذج إضافة تعليق -->
+            <div class="comment-form">
+                <h3>أضف تعليقك</h3>
+                <form method="post" id="comment-form">
+                    {% csrf_token %}
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="id_name">الاسم</label>
+                            <input type="text" name="name" id="id_name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="id_email">البريد الإلكتروني</label>
+                            <input type="email" name="email" id="id_email" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="id_body">التعليق</label>
+                        <textarea name="body" id="id_body" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">
+                        <i class="fas fa-paper-plane"></i> إرسال التعليق
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- الفوتر المتطور -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-col">
+                <div class="footer-logo"><i class="fas fa-book-open"></i> يَمَنِبِيدِيَا</div>
+                <p class="footer-about">منصة معرفية تهدف إلى توثيق ونشر المعلومات الدقيقة عن اليمن في جميع المجالات، نقدم محتوى موثوقًا وشموليًا يخدم الباحثين والقارئين.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-telegram"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-col">
+                <div class="footer-links">
+                    <h5>روابط سريعة</h5>
+                    <ul>
+                        <li><a href="/"><i class="fas fa-chevron-left"></i> الرئيسية</a></li>
+                        <li><a href="/"><i class="fas fa-chevron-left"></i> جميع المقالات</a></li>
+                        <li><a href="/about/"><i class="fas fa-chevron-left"></i> عن الموسوعة</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-col">
+                <div class="footer-links">
+                    <h5>المساعدة</h5>
+                    <ul>
+                        <li><a href="/contact/"><i class="fas fa-chevron-left"></i> اتصل بنا</a></li>
+                        <li><a href="/faq/"><i class="fas fa-chevron-left"></i> الأسئلة الشائعة</a></li>
+                        <li><a href="/privacy-policy/"><i class="fas fa-chevron-left"></i> سياسة الخصوصية</a></li>
+                        <li><a href="/terms/"><i class="fas fa-chevron-left"></i> شروط الاستخدام</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-col">
+                <div class="footer-links">
+                    <h5>المشاركة</h5>
+                    <ul>
+                        <li><a href="/contact/"><i class="fas fa-chevron-left"></i> المساهمة معنا</a></li>
+                        <li><a href="/contact/"><i class="fas fa-chevron-left"></i> إرسال مقال</a></li>
+                        <li><a href="/contact/"><i class="fas fa-chevron-left"></i> الإبلاغ عن خطأ</a></li>
+                        <li><a href="/contact/"><i class="fas fa-chevron-left"></i> دعم الموسوعة</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            &copy; <span id="year"></span> يَمَنِبِيدِيَا. جميع الحقوق محفوظة.
+        </div>
+    </footer>
+
+    <script>
+        // زر الحفظ
+        const bookmarkBtn = document.getElementById('bookmark-btn');
+        if (bookmarkBtn) {
+            bookmarkBtn.addEventListener('click', function() {
+                const articleId = this.getAttribute('data-article-id');
+                const bookmarkText = document.getElementById('bookmark-text');
+                
+                fetch(`/articles/${articleId}/bookmark/`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}',
+                        'Content-Type': 'application/json',
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'added') {
+                        this.innerHTML = '<i class="fas fa-bookmark"></i> تم الحفظ';
+                        bookmarkText.textContent = 'تم الحفظ';
+                    } else if (data.status === 'removed') {
+                        this.innerHTML = '<i class="far fa-bookmark"></i> حفظ المقال';
+                        bookmarkText.textContent = 'حفظ المقال';
+                    } else if (data.status === 'login_required') {
+                        window.location.href = `/login/?next=${window.location.pathname}`;
+                    }
+                });
+            });
+        }
+        
+        // زر الإعجاب
+        const likeBtn = document.getElementById('like-btn');
+        if (likeBtn) {
+            likeBtn.addEventListener('click', function() {
+                const articleId = this.getAttribute('data-article-id');
+                const likeCount = this.querySelector('.like-count');
+                
+                fetch(`/articles/${articleId}/like/`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}',
+                        'Content-Type': 'application/json',
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'liked') {
+                        this.classList.add('liked');
+                        likeCount.textContent = data.likes_count;
+                        this.innerHTML = '<i class="fas fa-heart"></i> ' + likeCount.textContent;
+                    } else if (data.status === 'unliked') {
+                        this.classList.remove('liked');
+                        likeCount.textContent = data.likes_count;
+                        this.innerHTML = '<i class="far fa-heart"></i> ' + likeCount.textContent;
+                    } else if (data.status === 'login_required') {
+                        window.location.href = `/login/?next=${window.location.pathname}`;
+                    }
+                });
+            });
+        }
+        
+        // مشاركة على وسائل التواصل
+        document.querySelectorAll('.share-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const url = window.location.href;
+                const title = '{{ article.title }}';
+                const platform = this.getAttribute('data-platform');
+                
+                let shareUrl = '';
+                switch(platform) {
+                    case 'facebook':
+                        shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
+                        break;
+                    case 'twitter':
+                        shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}`;
+                        break;
+                    case 'whatsapp':
+                        shareUrl = `https://wa.me/?text=${encodeURIComponent(title + ' ' + url)}`;
+                        break;
+                    case 'linkedin':
+                        shareUrl = `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(url)}&title=${encodeURIComponent(title)}`;
+                        break;
+                }
+                
+                if (shareUrl) {
+                    window.open(shareUrl, '_blank', 'width=600,height=500');
+                }
+            });
+        });
+        
+        // إرسال التعليق
+        const commentForm = document.getElementById('comment-form');
+        if (commentForm) {
+            commentForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const formData = new FormData(this);
+                
+                fetch(this.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}',
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        window.location.reload();
+                    } else {
+                        alert('حدث خطأ أثناء إرسال التعليق: ' + data.error);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('حدث خطأ أثناء إرسال التعليق');
+                });
+            });
+        }
+        
+        // تأثيرات التحميل
+        document.body.style.opacity = '0';
+        window.addEventListener('DOMContentLoaded', function() {
+            document.body.style.transition = 'opacity 0.5s ease';
+            document.body.style.opacity = '1';
+            
+            // تأثيرات ظهور العناصر
+            const animateElements = document.querySelectorAll('.comment, .card, .related-card');
+            animateElements.forEach((el, index) => {
+                setTimeout(() => {
+                    el.style.opacity = '1';
+                    el.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+    </script>
+</body>
+</html>
