@@ -12,23 +12,21 @@ DEBUG = False
 ALLOWED_HOSTS = ['yemenpedia-4.onrender.com']
 
 INSTALLED_APPS = [
-        'grappelli',
+    'grappelli',
     'django.contrib.admin',                # تفعيل لوحة الإدارة
-    'django.contrib.auth',               # مطلوب لنظام المستخدمين
-    'django.contrib.sessions',           # ضروري لدعم الجلسات
+    'django.contrib.auth',                 # مطلوب لنظام المستخدمين
+    'django.contrib.sessions',             # ضروري لدعم الجلسات
     'django.contrib.contenttypes',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.sitemaps',           # لدعم خريطة الموقع sitemap
+    'django.contrib.sitemaps',             # لدعم خريطة الموقع sitemap
     'articles.apps.ArticlesConfig',
     'contact.apps.ContactConfig',
-     'core',
-     'dashboard',
-
+    'core',
+    'dashboard',
 ]
 
 LOGIN_REDIRECT_URL = '/dashboard/profile/'  # مسار صفحة البروفايل الجديدة
-
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -55,8 +53,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.media',
                 'articles.context_processors.categories_processor',
-                                'core.context_processors.unread_notifications_count',  # جديد
-
+                'core.context_processors.unread_notifications_count',  # جديد
             ],
         },
     },
@@ -75,20 +72,22 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
 
-# إذا لم تستخدم custom user model فلا تغير AUTH_USER_MODEL
-
 LANGUAGE_CODE = 'ar'
 TIME_ZONE = 'Asia/Riyadh'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
-STATIC_URL = 'static/'
+# ملفات ثابتة (Static files) - مهم جداً للإنتاج
+STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # مجلد لتجميع static عند استخدام collectstatic
 
+# ملفات الوسائط (صور، فيديوهات، ... الخ)
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+# إعدادات البريد الإلكتروني
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
@@ -97,9 +96,12 @@ EMAIL_HOST_USER = 'halax.7y7@gmail.com'
 EMAIL_HOST_PASSWORD = 'yqvw ahpp bavg pwvl'
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
+# أمان
+SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
 X_FRAME_OPTIONS = 'DENY'
-
 
 from django.contrib.messages import constants as messages
 
@@ -110,8 +112,3 @@ MESSAGE_TAGS = {
     messages.WARNING: 'warning',
     messages.ERROR: 'danger',
 }
-
-SECURE_BROWSER_XSS_FILTER = True
-SECURE_CONTENT_TYPE_NOSNIFF = True
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_SECURE = True
