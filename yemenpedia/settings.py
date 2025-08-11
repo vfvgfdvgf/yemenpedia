@@ -24,7 +24,6 @@ INSTALLED_APPS = [
     'contact.apps.ContactConfig',
      'core',
      'dashboard',
-     'static',
 
 ]
 
