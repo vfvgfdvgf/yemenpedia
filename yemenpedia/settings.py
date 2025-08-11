@@ -1,15 +1,11 @@
-"""
-Django settings for yemenpedia project.
-"""
-
 from pathlib import Path
 import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-mb)@-w@en50p52b4qjj4(v(7=5*6jr5mt4$&bemzolla*+1#w-'
-DEBUG = False
-ALLOWED_HOSTS = ['yemenpedia-4.onrender.com']
+DEBUG = True
+ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'grappelli',
@@ -78,16 +74,15 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
-# ملفات ثابتة (Static files) - مهم جداً للإنتاج
+# إعدادات الملفات الثابتة (Static files)
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # مجلد لتجميع static عند استخدام collectstatic
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]   # مجلد ملفات static في المشروع
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')     # المجلد الذي سيجمع فيه collectstatic كل ملفات static
 
-# ملفات الوسائط (صور، فيديوهات، ... الخ)
+# إعدادات ملفات الوسائط (Media files)
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# إعدادات البريد الإلكتروني
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
@@ -96,11 +91,7 @@ EMAIL_HOST_USER = 'halax.7y7@gmail.com'
 EMAIL_HOST_PASSWORD = 'yqvw ahpp bavg pwvl'
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
-# أمان
-SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_SECURE = True
 X_FRAME_OPTIONS = 'DENY'
 
 from django.contrib.messages import constants as messages
@@ -112,3 +103,8 @@ MESSAGE_TAGS = {
     messages.WARNING: 'warning',
     messages.ERROR: 'danger',
 }
+
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
