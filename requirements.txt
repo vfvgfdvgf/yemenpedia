@@ -6,3 +6,4 @@ django-ckeditor
 gunicorn
 whitenoise
 psycopg2-binary   # لو تستخدم PostgreSQL
+django-grappelli
