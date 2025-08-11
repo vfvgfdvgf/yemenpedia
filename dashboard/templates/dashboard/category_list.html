@@ -1,0 +1,26 @@
+{% extends 'dashboard/base.html' %}
+{% block content %}
+<h2>قائمة التصنيفات</h2>
+<a href="{% url 'dashboard:category_create' %}" class="btn btn-success mb-3">إضافة تصنيف جديد</a>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>الاسم</th>
+            <th>الإجراءات</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for category in categories %}
+        <tr>
+            <td>{{ category.name }}</td>
+            <td>
+                <a href="{% url 'dashboard:category_edit' category.pk %}" class="btn btn-primary btn-sm">تعديل</a>
+                <a href="{% url 'dashboard:category_delete' category.pk %}" class="btn btn-danger btn-sm">حذف</a>
+            </td>
+        </tr>
+    {% empty %}
+        <tr><td colspan="2" class="text-center">لا توجد تصنيفات</td></tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

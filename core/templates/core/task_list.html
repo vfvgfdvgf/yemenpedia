@@ -1,0 +1,40 @@
+{% load static %}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<div class="container mt-4">
+    <h2 class="mb-4">📋 قائمة المهام</h2>
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>العنوان</th>
+                <th>المسند إليه</th>
+                <th>الحالة</th>
+                <th>تاريخ الإنشاء</th>
+                {% if is_moderator %}<th>إجراء</th>{% endif %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for task in tasks %}
+            <tr>
+                <td>{{ task.title }}</td>
+                <td>{{ task.assigned_to }}</td>
+                <td>{{ task.get_status_display }}</td>
+                <td>{{ task.created_at|date:"Y-m-d H:i" }}</td>
+                {% if is_moderator %}
+                <td>
+                    {% if task.status != "done" %}
+                        <a href="{% url 'mark_task_done' task.id %}" class="btn btn-success btn-sm">تم</a>
+                    {% else %}
+                        <span class="badge bg-success">مكتملة</span>
+                    {% endif %}
+                </td>
+                {% endif %}
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5" class="text-center">لا توجد مهام</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

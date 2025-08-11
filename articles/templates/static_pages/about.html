@@ -7,14 +7,16 @@
     <title>من نحن - يمنبيديا</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+         <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/favicon-16x16.png' %}">
+
     <style>
         :root {
-            --primary-color: #000;
-            --secondary-color: #fff;
-            --accent-color: #007aff;
-            --text-color: #1d1d1f;
-            --light-gray: #f5f5f7;
-            --dark-gray: #86868b;
+            --primary-color: #000000;
+            --secondary-color: #ffffff;
+            --accent-color: #1a1a1a;
+            --text-color: #333333;
+            --light-gray: #f5f5f5;
+            --dark-gray: #888888;
             --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
         
@@ -33,12 +35,12 @@
             scroll-behavior: smooth;
         }
 
-        /* الهيدر */
+        /* ====== الهيدر المحسن ====== */
         header {
             position: fixed;
             top: 0;
             width: 100%;
-            background: rgba(255, 255, 255, 0.96);
+            background: rgba(255, 255, 255, 0.98);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             display: flex;
@@ -46,13 +48,12 @@
             align-items: center;
             padding: 12px 5%;
             z-index: 1000;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
             transition: var(--transition);
-            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.03);
         }
         
         header.scrolled {
-            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.05);
             padding: 8px 5%;
         }
         
@@ -67,9 +68,9 @@
             gap: 10px;
         }
         
-        .logo i {
-            color: var(--accent-color);
-            font-size: 1.8rem;
+        .logo img {
+            height: 40px;
+            width: auto;
         }
         
         nav {
@@ -100,12 +101,11 @@
             content: '';
             position: absolute;
             width: 0;
-            height: 3px;
+            height: 2px;
             bottom: 0;
             right: 0;
             background-color: var(--accent-color);
             transition: var(--transition);
-            border-radius: 3px;
         }
         
         nav a:hover::after,
@@ -113,7 +113,7 @@
             width: 100%;
         }
 
-        /* محتوى الصفحة */
+        /* ====== المحتوى الرئيسي ====== */
         .about-container {
             max-width: 1200px;
             margin: 120px auto 80px;
@@ -125,218 +125,173 @@
             margin-bottom: 60px;
         }
         
-        .about-header h1 {
-            font-size: 3rem;
+        .about-title {
+            font-size: 2.8rem;
             font-weight: 700;
             margin-bottom: 20px;
             color: var(--primary-color);
             position: relative;
-            display: inline-block;
         }
         
-        .about-header h1::after {
+        .about-title::after {
             content: '';
             position: absolute;
             bottom: -15px;
             right: 50%;
             transform: translateX(50%);
             width: 100px;
-            height: 4px;
-            background: linear-gradient(to right, var(--accent-color), #0062cc);
-            border-radius: 2px;
+            height: 3px;
+            background: var(--accent-color);
         }
         
-        .about-header p {
+        .about-description {
             font-size: 1.3rem;
             color: var(--dark-gray);
             max-width: 800px;
             margin: 0 auto;
-            line-height: 1.9;
+        }
+
+        /* ====== أقسام الصفحة ====== */
+        .about-section {
+            margin-bottom: 80px;
         }
         
-        /* قسم الرؤية والرسالة */
+        .section-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 40px;
+            color: var(--primary-color);
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            right: 0;
+            width: 60px;
+            height: 3px;
+            background: var(--accent-color);
+        }
+        
         .mission-vision {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 40px;
-            margin-bottom: 80px;
+            margin-bottom: 60px;
         }
         
         .mission-box, .vision-box {
             background: var(--secondary-color);
-            border-radius: 16px;
-            padding: 40px;
-            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.07);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
             border: 1px solid rgba(0, 0, 0, 0.08);
             transition: var(--transition);
-            text-align: center;
         }
         
         .mission-box:hover, .vision-box:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
         }
         
-        .mission-box h2, .vision-box h2 {
-            font-size: 1.8rem;
-            margin-bottom: 25px;
-            color: var(--accent-color);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-        }
-        
-        .mission-box p, .vision-box p {
-            font-size: 1.1rem;
-            line-height: 1.9;
-            color: var(--text-color);
-        }
-
-        /* قسم القيم الأساسية */
-        .values-section {
-            margin-bottom: 80px;
-        }
-        
-        .values-section h2 {
-            font-size: 2.2rem;
-            text-align: center;
-            margin-bottom: 50px;
-            color: var(--primary-color);
-            position: relative;
-        }
-        
-        .values-section h2::after {
-            content: '';
-            position: absolute;
-            bottom: -15px;
-            right: 50%;
-            transform: translateX(50%);
-            width: 100px;
-            height: 4px;
-            background: linear-gradient(to right, var(--accent-color), #0062cc);
-            border-radius: 2px;
-        }
-        
-        .values-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-        }
-        
-        .value-card {
-            background: var(--secondary-color);
-            border-radius: 16px;
-            padding: 30px;
-            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.07);
-            transition: var(--transition);
-            border: 1px solid rgba(0, 0, 0, 0.08);
-            text-align: center;
-        }
-        
-        .value-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
-        }
-        
-        .value-icon {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 25px;
-            background: linear-gradient(to right, var(--accent-color), #0062cc);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.8rem;
-        }
-        
-        .value-card h3 {
-            font-size: 1.4rem;
-            margin-bottom: 15px;
-            color: var(--primary-color);
-        }
-        
-        .value-card p {
-            color: var(--dark-gray);
-            font-size: 1rem;
-            line-height: 1.7;
-        }
-
-        /* قسم المحتوى المميز */
-        .featured-content {
-            background: var(--light-gray);
-            padding: 60px 5%;
-            border-radius: 16px;
-            margin-bottom: 80px;
-        }
-        
-        .featured-content h2 {
-            font-size: 2.2rem;
-            text-align: center;
-            margin-bottom: 50px;
-            color: var(--primary-color);
-            position: relative;
-        }
-        
-        .featured-content h2::after {
-            content: '';
-            position: absolute;
-            bottom: -15px;
-            right: 50%;
-            transform: translateX(50%);
-            width: 100px;
-            height: 4px;
-            background: linear-gradient(to right, var(--accent-color), #0062cc);
-            border-radius: 2px;
-        }
-        
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-        
-        .feature-card {
-            background: var(--secondary-color);
-            border-radius: 16px;
-            padding: 30px;
-            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.07);
-            transition: var(--transition);
-            border: 1px solid rgba(0, 0, 0, 0.08);
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
-        }
-        
-        .feature-card h3 {
+        .mission-box h3, .vision-box h3 {
             font-size: 1.5rem;
             margin-bottom: 20px;
             color: var(--accent-color);
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 10px;
         }
         
-        .feature-card h3 i {
-            font-size: 1.8rem;
-        }
-        
-        .feature-card p {
-            color: var(--dark-gray);
-            font-size: 1.05rem;
+        .mission-box p, .vision-box p {
+            color: var(--text-color);
             line-height: 1.8;
         }
 
-        /* الفوتر */
+        /* ====== فريق العمل ====== */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .team-member {
+            background: var(--secondary-color);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            text-align: center;
+        }
+        
+        .team-member:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .member-image {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .member-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .team-member:hover .member-image img {
+            transform: scale(1.05);
+        }
+        
+        .member-info {
+            padding: 25px;
+        }
+        
+        .member-info h4 {
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+            color: var(--primary-color);
+        }
+        
+        .member-info p {
+            color: var(--dark-gray);
+            margin-bottom: 15px;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 35px;
+            height: 35px;
+            background: var(--light-gray);
+            border-radius: 50%;
+            color: var(--text-color);
+            transition: var(--transition);
+        }
+        
+        .social-links a:hover {
+            background: var(--accent-color);
+            color: var(--secondary-color);
+        }
+
+        /* ====== الفوتر المحسن ====== */
         footer {
             background: var(--primary-color);
             color: var(--secondary-color);
             padding: 80px 5% 40px;
-            margin-top: 100px;
+            margin-top: 80px;
             position: relative;
         }
         
@@ -346,8 +301,8 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 10px;
-            background: linear-gradient(to right, var(--accent-color), #0062cc);
+            height: 5px;
+            background: var(--accent-color);
         }
         
         .footer-content {
@@ -355,7 +310,7 @@
             margin: 0 auto;
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 50px;
+            gap: 40px;
         }
         
         .footer-col {
@@ -371,46 +326,42 @@
             gap: 10px;
         }
         
-        .footer-logo i {
-            color: var(--accent-color);
-            font-size: 2rem;
-        }
-        
         .footer-about {
-            font-size: 1rem;
+            font-size: 0.95rem;
             line-height: 1.8;
             opacity: 0.8;
             margin-bottom: 25px;
         }
         
-        .social-links {
+        .footer-social-links {
             display: flex;
             gap: 15px;
         }
         
-        .social-links a {
+        .footer-social-links a {
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 45px;
-            height: 45px;
+            width: 40px;
+            height: 40px;
             background: rgba(255, 255, 255, 0.1);
             border-radius: 50%;
-            color: white;
-            font-size: 1.2rem;
+            color: var(--secondary-color);
+            font-size: 1.1rem;
             transition: var(--transition);
         }
         
-        .social-links a:hover {
+        .footer-social-links a:hover {
             background: var(--accent-color);
             transform: translateY(-3px);
         }
         
         .footer-links h5 {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             margin-bottom: 25px;
             position: relative;
-            padding-bottom: 15px;
+            padding-bottom: 10px;
+            opacity: 0.9;
         }
         
         .footer-links h5::after {
@@ -418,8 +369,8 @@
             position: absolute;
             bottom: 0;
             right: 0;
-            width: 50px;
-            height: 3px;
+            width: 40px;
+            height: 2px;
             background: var(--accent-color);
         }
         
@@ -428,219 +379,161 @@
         }
         
         .footer-links li {
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
         
         .footer-links a {
-            color: rgba(255, 255, 255, 0.8);
+            color: rgba(255, 255, 255, 0.7);
             text-decoration: none;
-            font-size: 1rem;
+            font-size: 0.95rem;
             transition: var(--transition);
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
         
         .footer-links a:hover {
-            color: var(--accent-color);
+            color: var(--secondary-color);
             padding-right: 5px;
         }
         
         .footer-links a i {
-            font-size: 0.8rem;
+            font-size: 0.7rem;
+            opacity: 0.7;
         }
         
         .copyright {
             text-align: center;
-            margin-top: 70px;
+            margin-top: 60px;
             padding-top: 30px;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
         }
         
-        /* التجاوب */
+        /* ====== التجاوب ====== */
         @media (max-width: 1024px) {
-            .about-header h1 {
+            .about-title {
                 font-size: 2.5rem;
             }
             
-            .mission-box, .vision-box {
-                padding: 30px;
+            .section-title {
+                font-size: 2rem;
             }
         }
         
         @media (max-width: 768px) {
             header {
-                padding: 12px 5%;
-            }
-            
-            .logo a {
-                font-size: 1.4rem;
-            }
-            
-            nav {
-                display: none;
+                padding: 10px 5%;
             }
             
             .about-container {
                 margin-top: 100px;
             }
             
-            .about-header h1 {
+            .about-title {
                 font-size: 2.2rem;
             }
             
-            .about-header p {
+            .about-description {
                 font-size: 1.1rem;
             }
             
-            .mission-box h2, .vision-box h2 {
-                font-size: 1.5rem;
-            }
-            
-            .values-section h2, .featured-content h2 {
-                font-size: 1.8rem;
+            .mission-vision {
+                grid-template-columns: 1fr;
+                gap: 30px;
             }
         }
         
         @media (max-width: 480px) {
-            .about-header h1 {
+            .about-title {
                 font-size: 1.8rem;
             }
             
-            .mission-vision, .values-grid, .features-grid {
+            .section-title {
+                font-size: 1.6rem;
+            }
+            
+            .team-grid {
                 grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
-    <!-- الهيدر -->
+    <!-- الهيدر المحسن -->
     <header id="header">
         <div class="logo">
-            <a href="{% url 'articles:article_list' %}">
-                <i class="fas fa-book-open"></i> يمنبيديا
+            <a href="/">
+                <img src="https://f.top4top.io/p_3509x0q4h1.png" alt="يَمَنِبِيدِيَا" width="40" height="40"> يَمَنِبِيدِيَا
             </a>
         </div>
         <nav>
-            <a href="{% url 'articles:article_list' %}">الرئيسية</a>
-            <a href="{% url 'articles:categories_list' %}">التصنيفات</a>
+            <a href="/">الرئيسية</a>
+            <a href="/categories/">التصنيفات</a>
             <a href="/about/" class="active">من نحن</a>
             <a href="/contact/">اتصل بنا</a>
             <a href="/privacy-policy/">الخصوصية</a>
         </nav>
     </header>
 
-    <!-- محتوى الصفحة -->
-    <main class="about-container">
-        <!-- عنوان الصفحة -->
+    <!-- المحتوى الرئيسي -->
+    <div class="about-container">
         <div class="about-header">
-            <h1>من نحن</h1>
-            <p>يمنبيديا هي موسوعة يمنية شاملة تهدف إلى توثيق المعرفة عن اليمن في جميع المجالات، نقدم محتوى موثوقًا ودقيقًا يساهم في نشر الوعي والمعرفة عن هذا البلد العريق.</p>
+            <h1 class="about-title">من نحن</h1>
+            <p class="about-description">يمنبيديا هي موسوعة يمنية شاملة تهدف إلى توثيق المعرفة عن اليمن في جميع المجالات، نقدم محتوى موثوقًا ودقيقًا يساهم في نشر الوعي والمعرفة عن هذا البلد العريق.</p>
         </div>
-        
+
         <!-- الرؤية والرسالة -->
         <div class="mission-vision">
             <div class="mission-box">
-                <h2><i class="fas fa-bullseye"></i> مهمتنا</h2>
+                <h3><i class="fas fa-bullseye"></i> مهمتنا</h3>
                 <p>تقديم محتوى معرفي دقيق وموثوق عن اليمن في جميع المجالات، والعمل على توثيق التراث اليمني والإنجازات العلمية والثقافية، وإتاحة المعلومات للباحثين والقراء بطريقة سهلة ومنظمة.</p>
             </div>
             
             <div class="vision-box">
-                <h2><i class="fas fa-eye"></i> رؤيتنا</h2>
+                <h3><i class="fas fa-eye"></i> رؤيتنا</h3>
                 <p>أن نكون المصدر الأول الموثوق للمعلومات عن اليمن، وأن نساهم في بناء قاعدة معرفية شاملة تخدم الأجيال الحالية والقادمة، وتعزز الوعي بالهوية اليمنية وإرثها الحضاري.</p>
             </div>
         </div>
-        
-        <!-- القيم الأساسية -->
-        <div class="values-section">
-            <h2>قيمنا الأساسية</h2>
-            
-            <div class="values-grid">
-                <div class="value-card">
-                    <div class="value-icon">
-                        <i class="fas fa-check-circle"></i>
-                    </div>
-                    <h3>الدقة والموثوقية</h3>
-                    <p>نلتزم بتقديم معلومات دقيقة ومدققة من مصادر موثوقة، ونتحرى الصحة في كل ما ننشره.</p>
-                </div>
-                
-                <div class="value-card">
-                    <div class="value-icon">
-                        <i class="fas fa-balance-scale"></i>
-                    </div>
-                    <h3>الحياد والموضوعية</h3>
-                    <p>نقدم المعلومات بطريقة محايدة وموضوعية، بعيدًا عن التحيز أو التوجهات الشخصية.</p>
-                </div>
-                
-                <div class="value-card">
-                    <div class="value-icon">
-                        <i class="fas fa-book"></i>
-                    </div>
-                    <h3>الشمولية</h3>
-                    <p>نسعى لتغطية جميع جوانب المعرفة عن اليمن، من التاريخ والجغرافيا إلى الثقافة والعلوم.</p>
-                </div>
-                
-                <div class="value-card">
-                    <div class="value-icon">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <h3>المشاركة المجتمعية</h3>
-                    <p>نؤمن بدور المجتمع في إثراء المحتوى، ونسعى لتمكين الجميع من المساهمة في بناء المعرفة.</p>
-                </div>
-            </div>
-        </div>
-        
-        <!-- المحتوى المميز -->
-        <div class="featured-content">
-            <h2>مميزات يمنبيديا</h2>
-            
-            <div class="features-grid">
-                <div class="feature-card">
-                    <h3><i class="fas fa-search"></i> بحث متقدم</h3>
-                    <p>نظام بحث متطور يمكنك من العثور على المعلومات بسرعة وسهولة باستخدام كلمات مفتاحية أو تصنيفات أو فترات زمنية.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <h3><i class="fas fa-certificate"></i> محتوى موثوق</h3>
-                    <p>جميع مقالاتنا تخضع لمراجعة دقيقة من قبل متخصصين لضمان دقة المعلومات وموثوقيتها قبل النشر.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <h3><i class="fas fa-layer-group"></i> تصنيفات منظمة</h3>
-                    <p>تصفح المحتوى من خلال نظام تصنيف هرمي يغطي جميع المجالات المعرفية المتعلقة باليمن.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <h3><i class="fas fa-images"></i> وسائط متعددة</h3>
-                    <p>لا نقتصر على النصوص فقط، بل نوفر معارض للصور ومقاطع الفيديو والخرائط التفاعلية لتقديم تجربة غنية.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <h3><i class="fas fa-mobile-alt"></i> تجربة متكاملة</h3>
-                    <p>تصميم متجاوب يعمل على جميع الأجهزة، مع واجهة مستخدم سهلة تمكنك من الوصول للمحتوى بسلاسة.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <h3><i class="fas fa-history"></i> تحديث مستمر</h3>
-                    <p>نقوم بتحديث المحتوى بشكل دوري لإضافة المعلومات الجديدة وتصحيح أي بيانات قديمة أو غير دقيقة.</p>
-                </div>
-            </div>
-        </div>
-    </main>
 
-    <!-- الفوتر -->
+        <!-- عن يمنبيديا -->
+        <div class="about-section">
+            <h2 class="section-title">عن يمنبيديا</h2>
+            <p>يمنبيديا هي مبادرة غير ربحية تأسست عام 2023 بهدف إنشاء موسوعة شاملة عن اليمن، تغطي جميع الجوانب التاريخية والجغرافية والثقافية والعلمية. نعمل على جمع المعلومات من مصادر موثوقة ومراجعتها بدقة قبل نشرها.</p>
+            <p>نؤمن بأن المعرفة يجب أن تكون متاحة للجميع، لذلك نقدم محتوانا مجانًا دون أي قيود. كما نرحب بمساهمات الخبراء والباحثين والمهتمين لتطوير المحتوى وإثرائه.</p>
+        </div>
+
+     
+
+        <!-- كيف يمكنك المساعدة -->
+        <div class="about-section">
+            <h2 class="section-title">كيف يمكنك المساعدة</h2>
+            <p>يمكنك المساهمة في تطوير يمنبيديا بعدة طرق:</p>
+            <ul style="margin: 20px 0; padding-right: 20px; line-height: 2;">
+                <li>كتابة مقالات جديدة أو تحسين المقالات الحالية</li>
+                <li>التدقيق اللغوي والمعلوماتي للمحتوى</li>
+                <li>تقديم صور أو وثائق تاريخية</li>
+                <li>الدعم المادي لاستمرار المشروع</li>
+                <li>نشر الموسوعة وزيادة الوعي بها</li>
+            </ul>
+            <p>للمساهمة، يمكنك التواصل معنا عبر صفحة <a href="/contact/" style="color: var(--accent-color); text-decoration: none;">اتصل بنا</a>.</p>
+        </div>
+    </div>
+
+    <!-- الفوتر المحسن -->
     <footer>
         <div class="footer-content">
             <div class="footer-col">
-                <div class="footer-logo"><i class="fas fa-book-open"></i> يمنبيديا</div>
+                <div class="footer-logo">
+                    <img src="https://f.top4top.io/p_3509x0q4h1.png" alt="يَمَنِبِيدِيَا" width="40" height="40"> يَمَنِبِيدِيَا
+                </div>
                 <p class="footer-about">منصة معرفية تهدف إلى توثيق ونشر المعلومات الدقيقة عن اليمن في جميع المجالات، نقدم محتوى موثوقًا وشموليًا يخدم الباحثين والقارئين.</p>
-                <div class="social-links">
+                <div class="footer-social-links">
                     <a href="#"><i class="fab fa-facebook-f"></i></a>
                     <a href="#"><i class="fab fa-twitter"></i></a>
                     <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-telegram"></i></a>
                 </div>
             </div>
             
@@ -648,10 +541,9 @@
                 <div class="footer-links">
                     <h5>روابط سريعة</h5>
                     <ul>
-                        <li><a href="{% url 'articles:article_list' %}"><i class="fas fa-chevron-left"></i> الرئيسية</a></li>
-                        <li><a href="{% url 'articles:categories_list' %}"><i class="fas fa-chevron-left"></i> التصنيفات</a></li>
+                        <li><a href="/"><i class="fas fa-chevron-left"></i> الرئيسية</a></li>
+                        <li><a href="/categories/"><i class="fas fa-chevron-left"></i> التصنيفات</a></li>
                         <li><a href="/about/"><i class="fas fa-chevron-left"></i> عن الموسوعة</a></li>
-                        <li><a href="/contact/"><i class="fas fa-chevron-left"></i> اتصل بنا</a></li>
                     </ul>
                 </div>
             </div>
@@ -660,10 +552,9 @@
                 <div class="footer-links">
                     <h5>المساعدة</h5>
                     <ul>
+                        <li><a href="/contact/"><i class="fas fa-chevron-left"></i> اتصل بنا</a></li>
                         <li><a href="/faq/"><i class="fas fa-chevron-left"></i> الأسئلة الشائعة</a></li>
                         <li><a href="/privacy-policy/"><i class="fas fa-chevron-left"></i> سياسة الخصوصية</a></li>
-                        <li><a href="/terms/"><i class="fas fa-chevron-left"></i> شروط الاستخدام</a></li>
-                        <li><a href="/report/"><i class="fas fa-chevron-left"></i> الإبلاغ عن خطأ</a></li>
                     </ul>
                 </div>
             </div>
@@ -675,14 +566,13 @@
                         <li><a href="/contribute/"><i class="fas fa-chevron-left"></i> المساهمة معنا</a></li>
                         <li><a href="/submit-article/"><i class="fas fa-chevron-left"></i> إرسال مقال</a></li>
                         <li><a href="/donate/"><i class="fas fa-chevron-left"></i> دعم الموسوعة</a></li>
-                        <li><a href="/volunteer/"><i class="fas fa-chevron-left"></i> التطوع</a></li>
                     </ul>
                 </div>
             </div>
         </div>
         
         <div class="copyright">
-            &copy; <span id="year"></span> يمنبيديا. جميع الحقوق محفوظة.
+            &copy; <span id="year"></span> يَمَنِبِيدِيَا. جميع الحقوق محفوظة.
         </div>
     </footer>
 

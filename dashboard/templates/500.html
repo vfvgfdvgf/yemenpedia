@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <title>خطأ في الخادم - 500</title>
+    <style>
+        body {
+            background-color: #f9f9f9;
+            color: #333;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            padding: 60px 20px;
+            direction: rtl;
+        }
+        h1 {
+            font-size: 4rem;
+            color: #d9534f;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 1.25rem;
+            margin-bottom: 40px;
+        }
+        a {
+            color: #0275d8;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .error-icon {
+            font-size: 6rem;
+            color: #d9534f;
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="error-icon">⚠️</div>
+    <h1>خطأ في الخادم</h1>
+    <p>عذراً، حدث خطأ غير متوقع في الخادم. الرجاء المحاولة مرة أخرى لاحقاً.</p>
+    <a href="{% url 'article_list' %}">العودة إلى الصفحة الرئيسية</a>
+</body>
+</html>

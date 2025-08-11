@@ -7,11 +7,21 @@ class CategoryAdmin(admin.ModelAdmin):
     list_display = ('name',)
     search_fields = ('name',)
 
+    class Media:
+        css = {
+            'all': ('dashboard/css/admin_custom.css',),
+        }
+
 @admin.register(Tag)
 class TagAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
     list_display = ('name',)
     search_fields = ('name',)
+
+    class Media:
+        css = {
+            'all': ('dashboard/css/admin_custom.css',),
+        }
 
 @admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):
@@ -23,6 +33,11 @@ class ArticleAdmin(admin.ModelAdmin):
     date_hierarchy = 'pub_date'
     ordering = ('-pub_date',)
 
+    class Media:
+        css = {
+            'all': ('admin_custom.css',)  # بدل 'dashboard/css/admin_custom.css'
+        }
+
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
     list_display = ('name', 'article', 'created', 'active')
@@ -33,3 +48,8 @@ class CommentAdmin(admin.ModelAdmin):
     def approve_comments(self, request, queryset):
         queryset.update(active=True)
     approve_comments.short_description = "اعتماد التعليقات المحددة"
+
+    class Media:
+        css = {
+            'all': ('admin_custom.css',)  # بدل 'dashboard/css/admin_custom.css'
+        }

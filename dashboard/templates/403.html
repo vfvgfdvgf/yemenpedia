@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <title>غير مسموح - 403</title>
+    <style>
+        body {
+            background-color: #fef7f7;
+            color: #a94442;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            padding: 60px 20px;
+            direction: rtl;
+        }
+        h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 1.25rem;
+            margin-bottom: 40px;
+        }
+        a {
+            color: #a94442;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .error-icon {
+            font-size: 6rem;
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="error-icon">🚫</div>
+    <h1>غير مسموح</h1>
+    <p>عذراً، ليس لديك الصلاحية للوصول إلى هذه الصفحة.</p>
+    <a href="{% url 'article_list' %}">العودة إلى الصفحة الرئيسية</a>
+</body>
+</html>

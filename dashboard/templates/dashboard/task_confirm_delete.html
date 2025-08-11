@@ -1,0 +1,10 @@
+{% extends 'dashboard/base.html' %}
+{% block content %}
+<h2>تأكيد حذف المهمة</h2>
+<p>هل أنت متأكد من حذف المهمة: <strong>{{ task.title }}</strong>؟</p>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">حذف</button>
+    <a href="{% url 'dashboard:task_list' %}" class="btn btn-secondary">إلغاء</a>
+</form>
+{% endblock %}

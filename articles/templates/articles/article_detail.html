@@ -7,6 +7,8 @@
     <title>{{ article.title }} - يمنبيديا</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+         <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/favicon-16x16.png' %}">
+
     <style>
         :root {
             --primary-color: #00695c;
@@ -838,41 +840,41 @@
             <h3 class="tags-title"><i class="fas fa-tags"></i> الكلمات المفتاحية</h3>
             <div class="tags-list">
                 {% for tag in article.tags.all %}
-                <a href="{% url 'articles:articles_by_tag' tag.slug %}" class="tag">
-                    <i class="fas fa-hashtag"></i> {{ tag.name }}
-                </a>
+       
                 {% endfor %}
             </div>
         </div>
         {% endif %}
         
         <!-- أزرار التفاعل -->
-        <div class="article-actions">
-            <div class="action-buttons">
-                {% if user.is_authenticated %}
-                <button id="bookmark-btn" class="action-btn" data-article-id="{{ article.pk }}">
-                    <i class="far fa-bookmark"></i> 
-                    <span id="bookmark-text">حفظ المقال</span>
-                </button>
-                <button id="like-btn" class="action-btn" data-article-id="{{ article.pk }}">
-                    <i class="far fa-heart"></i> 
-                    <span class="like-count">{{ article.likes.count }}</span>
-                </button>
-                {% else %}
-                <a href="{% url 'login' %}?next={{ request.path }}" class="action-btn">
-                    <i class="fas fa-sign-in-alt"></i> سجل الدخول للتفاعل
-                </a>
-                {% endif %}
-            </div>
-            
-            <div class="share-buttons">
-                <span class="share-label">شارك المقال:</span>
-                <a href="#" class="share-btn facebook" data-platform="facebook"><i class="fab fa-facebook-f"></i></a>
-                <a href="#" class="share-btn twitter" data-platform="twitter"><i class="fab fa-twitter"></i></a>
-                <a href="#" class="share-btn whatsapp" data-platform="whatsapp"><i class="fab fa-whatsapp"></i></a>
-                <a href="#" class="share-btn linkedin" data-platform="linkedin"><i class="fab fa-linkedin-in"></i></a>
-            </div>
-        </div>
+   <div class="article-actions">
+    <div class="action-buttons">
+        <button id="bookmark-btn-{{ article.pk }}" class="action-btn" data-article-id="{{ article.pk }}" aria-label="حفظ المقال">
+            <i class="far fa-bookmark"></i> 
+            <span class="bookmark-text">حفظ المقال</span>
+        </button>
+        <button id="like-btn-{{ article.pk }}" class="action-btn" data-article-id="{{ article.pk }}" aria-label="إعجاب">
+            <i class="far fa-heart"></i> 
+            <span class="like-count">{{ article.likes.count }}</span>
+        </button>
+    </div>
+    
+    <div class="share-buttons">
+        <span class="share-label">شارك المقال:</span>
+        <button class="share-btn facebook" data-platform="facebook" aria-label="مشاركة على فيسبوك">
+            <i class="fab fa-facebook-f"></i>
+        </button>
+        <button class="share-btn twitter" data-platform="twitter" aria-label="مشاركة على تويتر">
+            <i class="fab fa-twitter"></i>
+        </button>
+        <button class="share-btn whatsapp" data-platform="whatsapp" aria-label="مشاركة على واتساب">
+            <i class="fab fa-whatsapp"></i>
+        </button>
+        <button class="share-btn linkedin" data-platform="linkedin" aria-label="مشاركة على لينكدإن">
+            <i class="fab fa-linkedin-in"></i>
+        </button>
+    </div>
+</div>
         
         <!-- مقالات ذات صلة -->
         <div class="related-articles">

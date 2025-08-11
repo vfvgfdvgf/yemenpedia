@@ -8,11 +8,12 @@ import os
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-mb)@-w@en50p52b4qjj4(v(7=5*6jr5mt4$&bemzolla*+1#w-'
-DEBUG = True
-ALLOWED_HOSTS = []
+DEBUG = False
+ALLOWED_HOSTS = ['yemenpedia-3.onrender.com']
 
 INSTALLED_APPS = [
-    'django.contrib.admin',              # تفعيل لوحة الإدارة
+        'grappelli',
+    'django.contrib.admin',                # تفعيل لوحة الإدارة
     'django.contrib.auth',               # مطلوب لنظام المستخدمين
     'django.contrib.sessions',           # ضروري لدعم الجلسات
     'django.contrib.contenttypes',
@@ -21,7 +22,14 @@ INSTALLED_APPS = [
     'django.contrib.sitemaps',           # لدعم خريطة الموقع sitemap
     'articles.apps.ArticlesConfig',
     'contact.apps.ContactConfig',
+     'core',
+     'dashboard',
+     'static',
+
 ]
+
+LOGIN_REDIRECT_URL = '/dashboard/profile/'  # مسار صفحة البروفايل الجديدة
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -48,6 +56,8 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.media',
                 'articles.context_processors.categories_processor',
+                                'core.context_processors.unread_notifications_count',  # جديد
+
             ],
         },
     },
@@ -90,3 +100,19 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 SECURE_CONTENT_TYPE_NOSNIFF = True
 X_FRAME_OPTIONS = 'DENY'
+
+
+from django.contrib.messages import constants as messages
+
+MESSAGE_TAGS = {
+    messages.DEBUG: 'secondary',
+    messages.INFO: 'info',
+    messages.SUCCESS: 'success',
+    messages.WARNING: 'warning',
+    messages.ERROR: 'danger',
+}
+
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True

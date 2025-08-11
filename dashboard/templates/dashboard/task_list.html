@@ -1,0 +1,42 @@
+{% extends 'dashboard/base.html' %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>المهام</h2>
+    {% if is_owner %}
+        <a href="{% url 'dashboard:task_create' %}" class="btn btn-success">➕ إضافة مهمة جديدة</a>
+    {% endif %}
+</div>
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th>العنوان</th>
+            <th>المسند إليه</th>
+            <th>الحالة</th>
+            <th>تاريخ الإنشاء</th>
+            {% if is_owner %}
+                <th>الإجراءات</th>
+            {% endif %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for task in tasks %}
+        <tr>
+            <td>{{ task.title }}</td>
+            <td>{{ task.assigned_to }}</td>
+            <td>{{ task.get_status_display }}</td>
+            <td>{{ task.created_at|date:"Y-m-d H:i" }}</td>
+            {% if is_owner %}
+            <td>
+                <a href="{% url 'dashboard:task_edit' task.pk %}" class="btn btn-primary btn-sm">✏️ تعديل</a>
+                <a href="{% url 'dashboard:task_delete' task.pk %}" class="btn btn-danger btn-sm">🗑️ حذف</a>
+            </td>
+            {% endif %}
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5" class="text-center">لا توجد مهام</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

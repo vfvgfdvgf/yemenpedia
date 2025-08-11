@@ -1,0 +1,8 @@
+Django>=4.2
+Pillow
+django-crispy-forms
+django-filter
+django-ckeditor
+gunicorn
+whitenoise
+psycopg2-binary   # لو تستخدم PostgreSQL

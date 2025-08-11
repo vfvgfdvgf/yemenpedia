@@ -1,0 +1,87 @@
+/* admin_custom.css */
+
+/* خلفية الصفحة العامة */
+body, #header, #user-tools {
+    background-color: #1f2937 !important; /* رمادي غامق مع لمسة زرقاء */
+    color: #e0e7ff !important;             /* نص أزرق فاتح مريح */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+}
+
+/* عنوان الصفحة في الهيدر */
+#header h1 a {
+    color: #fbbf24 !important;             /* أصفر ذهبي */
+    font-weight: 700 !important;
+    font-size: 1.8rem !important;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+}
+
+/* خلفية منطقة المحتوى */
+#content-main {
+    background-color: #f8fafc !important;  /* أبيض ناصع مع لمسة زرقاء خفيفة */
+    border-radius: 8px !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    padding: 20px !important;
+}
+
+/* خلفية جداول عرض البيانات */
+.model-changelist {
+    background-color: #e0e7ff !important;  /* أزرق فاتح */
+    border-radius: 6px !important;
+    border: 1px solid #c7d2fe !important;
+}
+
+/* تحسين ألوان وأسلوب الأزرار */
+.btn, input[type=submit], button {
+    background-color: #3b82f6 !important;  /* أزرق ساطع */
+    border-color: #2563eb !important;
+    color: white !important;
+    font-weight: 600 !important;
+    padding: 8px 18px !important;
+    border-radius: 6px !important;
+    box-shadow: 0 2px 6px rgba(59, 130, 246, 0.4);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* تأثير hover على الأزرار */
+.btn:hover, input[type=submit]:hover, button:hover {
+    background-color: #1d4ed8 !important;  /* أزرق داكن */
+    border-color: #1e40af !important;
+    box-shadow: 0 4px 12px rgba(29, 78, 216, 0.6);
+    color: white !important;
+    cursor: pointer;
+}
+
+/* تحسين شكل الحقول النصية والاختيارات */
+input[type="text"], input[type="password"], input[type="email"], select, textarea {
+    border: 1px solid #94a3b8 !important;
+    border-radius: 6px !important;
+    padding: 8px 12px !important;
+    background-color: #f1f5f9 !important;
+    color: #334155 !important;
+    font-size: 1rem !important;
+    transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus, select:focus, textarea:focus {
+    border-color: #3b82f6 !important;
+    outline: none !important;
+    background-color: #fff !important;
+}
+
+/* تحسين شكل العناوين داخل المحتوى */
+h1, h2, h3, h4, h5, h6 {
+    color: #1e293b !important;
+    font-weight: 700 !important;
+}
+
+/* تعديل ألوان الروابط */
+a {
+    color: #2563eb !important;
+    text-decoration: none !important;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #1e40af !important;
+    text-decoration: underline !important;
+}

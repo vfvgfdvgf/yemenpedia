@@ -5,11 +5,10 @@ from django.http import HttpResponsePermanentRedirect
 from .forms import CommentForm
 from .models import Article, Category, Comment
 
-
 def article_list_view(request):
     articles = Article.objects.filter(is_published=True).order_by('-pub_date')
 
-    # البحث
+    # جلب كلمة البحث من الرابط
     search_query = request.GET.get('q', '')
     if search_query:
         articles = articles.filter(
@@ -17,13 +16,13 @@ def article_list_view(request):
             Q(content__icontains=search_query)
         ).distinct()
 
-    # الفلترة حسب التصنيف
+    # الفلترة حسب التصنيف (اختياري)
     category_slug = request.GET.get('category')
     if category_slug:
         articles = articles.filter(category__slug=category_slug)
 
-    # التقسيم إلى صفحات
-    paginator = Paginator(articles, 10)
+    # تقسيم المقالات لصفحات
+    paginator = Paginator(articles, 10)  # 10 مقالات في كل صفحة
     page_number = request.GET.get('page')
     try:
         page_obj = paginator.page(page_number)
@@ -44,7 +43,7 @@ def article_list_view(request):
 def article_detail_view(request, pk, slug=None):
     article = get_object_or_404(Article, pk=pk, is_published=True)
 
-    # إعادة التوجيه إذا كان الـ slug غير صحيح
+    # إعادة التوجيه إذا السلاج غير صحيح
     if slug and article.slug != slug:
         return HttpResponsePermanentRedirect(article.get_absolute_url())
 
@@ -61,7 +60,7 @@ def article_detail_view(request, pk, slug=None):
     else:
         comment_form = CommentForm()
 
-    # زيادة عدد المشاهدات
+    # زيادة المشاهدات
     article.views += 1
     article.save()
 
@@ -78,15 +77,11 @@ def article_detail_view(request, pk, slug=None):
 
 
 def categories_list_view(request):
-    """عرض جميع التصنيفات"""
     categories = Category.objects.all()
-    return render(request, 'articles/categories_list.html', {
-        'categories': categories
-    })
+    return render(request, 'articles/categories_list.html', {'categories': categories})
 
 
 def category_article_list_view(request, slug):
-    """عرض مقالات تصنيف معين"""
     category = get_object_or_404(Category, slug=slug)
     articles = Article.objects.filter(category=category, is_published=True).order_by('-pub_date')
 
@@ -98,7 +93,6 @@ def category_article_list_view(request, slug):
             Q(content__icontains=search_query)
         )
 
-    # تقسيم الصفحات
     paginator = Paginator(articles, 10)
     page_number = request.GET.get('page')
     try:
@@ -119,49 +113,34 @@ def category_article_list_view(request, slug):
 
 
 def privacy_policy_view(request):
-    """صفحة سياسة الخصوصية"""
     return render(request, 'static_pages/privacy_policy.html')
 
 
 def about_view(request):
-    """صفحة من نحن"""
     return render(request, 'static_pages/about.html')
+
 
 def terms_view(request):
     return render(request, 'static_pages/terms.html')
+
 
 def faq_view(request):
     return render(request, 'static_pages/faq.html')
 
 
-from django.shortcuts import render, redirect
-
+# تسجيل دخول/خروج تجريبي (غير رسمي)
 def fake_login_view(request):
     if request.method == "POST":
         username = request.POST.get("username")
-        # تخزين حالة تسجيل الدخول في الجلسة
-        request.session['user'] = username
-        return redirect('articles:article_list')
-    return render(request, 'fake_login.html')
-
-def fake_logout_view(request):
-    try:
-        del request.session['user']
-    except KeyError:
-        pass
-    return redirect('articles:article_list')
-
-
-
-from django.shortcuts import render, redirect
-
-def fake_login_view(request):
-    if request.method == "POST":
-        username = request.POST.get("username")
-        request.session['user'] = username  # تخزين اسم المستخدم في الجلسة
+        request.session['user'] = username  # حفظ اسم المستخدم في الجلسة
         return redirect('articles:article_list')
     return render(request, 'fake_login.html')
 
 def fake_logout_view(request):
     request.session.pop('user', None)
     return redirect('articles:article_list')
+
+from django.shortcuts import render
+
+def custom_page_not_found(request, exception=None):
+    return render(request, "404.html", status=404)

@@ -7,14 +7,15 @@
     <title>الأسئلة الشائعة - يمنبيديا</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+         <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/favicon-16x16.png' %}">
     <style>
         :root {
-            --primary-color: #000;
-            --secondary-color: #fff;
-            --accent-color: #007aff;
-            --text-color: #1d1d1f;
-            --light-gray: #f5f5f7;
-            --dark-gray: #86868b;
+            --primary-color: #000000;
+            --secondary-color: #ffffff;
+            --accent-color: #1a1a1a;
+            --text-color: #333333;
+            --light-gray: #f5f5f5;
+            --dark-gray: #888888;
             --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
         
@@ -33,12 +34,12 @@
             scroll-behavior: smooth;
         }
 
-        /* الهيدر */
+        /* الهيدر المحسن */
         header {
             position: fixed;
             top: 0;
             width: 100%;
-            background: rgba(255, 255, 255, 0.96);
+            background: rgba(255, 255, 255, 0.98);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             display: flex;
@@ -46,13 +47,12 @@
             align-items: center;
             padding: 12px 5%;
             z-index: 1000;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
             transition: var(--transition);
-            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.03);
         }
         
         header.scrolled {
-            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.05);
             padding: 8px 5%;
         }
         
@@ -67,9 +67,9 @@
             gap: 10px;
         }
         
-        .logo i {
-            color: var(--accent-color);
-            font-size: 1.8rem;
+        .logo img {
+            height: 40px;
+            width: auto;
         }
         
         nav {
@@ -100,12 +100,11 @@
             content: '';
             position: absolute;
             width: 0;
-            height: 3px;
+            height: 2px;
             bottom: 0;
             right: 0;
             background-color: var(--accent-color);
             transition: var(--transition);
-            border-radius: 3px;
         }
         
         nav a:hover::after,
@@ -113,7 +112,7 @@
             width: 100%;
         }
 
-        /* محتوى الصفحة */
+        /* محتوى الأسئلة الشائعة */
         .faq-container {
             max-width: 1000px;
             margin: 120px auto 80px;
@@ -123,6 +122,7 @@
         .faq-header {
             text-align: center;
             margin-bottom: 50px;
+            animation: fadeInUp 0.8s ease;
         }
         
         .faq-header h1 {
@@ -143,14 +143,15 @@
             background: var(--secondary-color);
             border-radius: 16px;
             padding: 50px;
-            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.07);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
             border: 1px solid rgba(0, 0, 0, 0.08);
         }
         
         .faq-item {
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-            padding-bottom: 30px;
+            padding-bottom: 25px;
+            transition: var(--transition);
         }
         
         .faq-item:last-child {
@@ -160,18 +161,19 @@
         }
         
         .faq-question {
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             margin-bottom: 15px;
-            color: var(--accent-color);
+            color: var(--primary-color);
             cursor: pointer;
             display: flex;
             justify-content: space-between;
             align-items: center;
             transition: var(--transition);
+            padding: 10px 0;
         }
         
         .faq-question:hover {
-            color: var(--primary-color);
+            color: var(--accent-color);
         }
         
         .faq-question::after {
@@ -179,10 +181,13 @@
             font-family: 'Font Awesome 6 Free';
             font-weight: 900;
             transition: var(--transition);
+            color: var(--dark-gray);
+            font-size: 0.9rem;
         }
         
         .faq-question.active::after {
             transform: rotate(180deg);
+            color: var(--accent-color);
         }
         
         .faq-answer {
@@ -191,49 +196,95 @@
             color: var(--text-color);
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.3s ease;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+            padding: 0 15px;
         }
         
         .faq-answer.show {
             max-height: 500px;
+            padding: 15px;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .faq-answer p {
+            margin-bottom: 15px;
+        }
+        
+        .faq-answer p:last-child {
+            margin-bottom: 0;
         }
         
         .contact-support {
             text-align: center;
-            margin-top: 50px;
-            padding-top: 30px;
+            margin-top: 60px;
+            padding-top: 40px;
             border-top: 1px solid rgba(0, 0, 0, 0.1);
+            animation: fadeInUp 0.8s ease 0.3s forwards;
+            opacity: 0;
         }
         
         .contact-support p {
             font-size: 1.2rem;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
+            color: var(--dark-gray);
         }
         
         .support-button {
-            display: inline-block;
-            padding: 12px 30px;
-            background: linear-gradient(to right, var(--accent-color), #0062cc);
-            color: white;
+            display: inline-flex;
+            align-items: center;
+            padding: 14px 30px;
+            background-color: var(--accent-color);
+            color: var(--secondary-color);
             text-decoration: none;
             border-radius: 50px;
             font-size: 1.1rem;
             font-weight: 600;
             transition: var(--transition);
-            box-shadow: 0 5px 20px rgba(0, 122, 255, 0.2);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
         }
         
         .support-button:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 122, 255, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            background-color: var(--primary-color);
+        }
+        
+        .support-button i {
+            margin-right: 8px;
+            transition: transform 0.3s ease;
+        }
+        
+        .support-button:hover i {
+            transform: translateX(-5px);
         }
 
-        /* الفوتر */
+        /* تأثيرات الحركة */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* الفوتر المحسن */
         footer {
             background: var(--primary-color);
             color: var(--secondary-color);
             padding: 80px 5% 40px;
-            margin-top: 100px;
+            margin-top: 80px;
             position: relative;
         }
         
@@ -243,8 +294,8 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 10px;
-            background: linear-gradient(to right, var(--accent-color), #0062cc);
+            height: 5px;
+            background: var(--accent-color);
         }
         
         .footer-content {
@@ -252,7 +303,7 @@
             margin: 0 auto;
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 50px;
+            gap: 40px;
         }
         
         .footer-col {
@@ -268,13 +319,8 @@
             gap: 10px;
         }
         
-        .footer-logo i {
-            color: var(--accent-color);
-            font-size: 2rem;
-        }
-        
         .footer-about {
-            font-size: 1rem;
+            font-size: 0.95rem;
             line-height: 1.8;
             opacity: 0.8;
             margin-bottom: 25px;
@@ -289,12 +335,12 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 45px;
-            height: 45px;
+            width: 40px;
+            height: 40px;
             background: rgba(255, 255, 255, 0.1);
             border-radius: 50%;
-            color: white;
-            font-size: 1.2rem;
+            color: var(--secondary-color);
+            font-size: 1.1rem;
             transition: var(--transition);
         }
         
@@ -304,10 +350,11 @@
         }
         
         .footer-links h5 {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             margin-bottom: 25px;
             position: relative;
-            padding-bottom: 15px;
+            padding-bottom: 10px;
+            opacity: 0.9;
         }
         
         .footer-links h5::after {
@@ -315,8 +362,8 @@
             position: absolute;
             bottom: 0;
             right: 0;
-            width: 50px;
-            height: 3px;
+            width: 40px;
+            height: 2px;
             background: var(--accent-color);
         }
         
@@ -325,41 +372,52 @@
         }
         
         .footer-links li {
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
         
         .footer-links a {
-            color: rgba(255, 255, 255, 0.8);
+            color: rgba(255, 255, 255, 0.7);
             text-decoration: none;
-            font-size: 1rem;
+            font-size: 0.95rem;
             transition: var(--transition);
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
         
         .footer-links a:hover {
-            color: var(--accent-color);
+            color: var(--secondary-color);
             padding-right: 5px;
         }
         
         .footer-links a i {
-            font-size: 0.8rem;
+            font-size: 0.7rem;
+            opacity: 0.7;
         }
         
         .copyright {
             text-align: center;
-            margin-top: 70px;
+            margin-top: 60px;
             padding-top: 30px;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
         }
         
         /* التجاوب */
+        @media (max-width: 1024px) {
+            .faq-header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .faq-content {
+                padding: 40px;
+            }
+        }
+        
         @media (max-width: 768px) {
             header {
-                padding: 12px 5%;
+                padding: 10px 5%;
             }
             
             .logo a {
@@ -375,7 +433,11 @@
             }
             
             .faq-header h1 {
-                font-size: 2.2rem;
+                font-size: 2rem;
+            }
+            
+            .faq-header p {
+                font-size: 1.1rem;
             }
             
             .faq-content {
@@ -384,6 +446,10 @@
             
             .faq-question {
                 font-size: 1.2rem;
+            }
+            
+            .contact-support p {
+                font-size: 1.1rem;
             }
         }
         
@@ -395,6 +461,19 @@
             .faq-content {
                 padding: 25px 20px;
             }
+            
+            .faq-question {
+                font-size: 1.1rem;
+            }
+            
+            .faq-answer {
+                font-size: 1rem;
+            }
+            
+            .support-button {
+                padding: 12px 25px;
+                font-size: 1rem;
+            }
         }
     </style>
 </head>
@@ -403,7 +482,7 @@
     <header id="header">
         <div class="logo">
             <a href="{% url 'articles:article_list' %}">
-                <i class="fas fa-book-open"></i> يمنبيديا
+                <img src="https://f.top4top.io/p_3509x0q4h1.png" alt="يَمَنِبِيدِيَا" width="40" height="40"> يمنبيديا
             </a>
         </div>
         <nav>
@@ -427,6 +506,7 @@
                 <div class="faq-question">ما هو يمنبيديا؟</div>
                 <div class="faq-answer">
                     <p>يمنبيديا هي موسوعة يمنية شاملة تهدف إلى توثيق المعرفة عن اليمن في جميع المجالات. نحن نقدم محتوى موثوقًا ودقيقًا يساهم في نشر الوعي والمعرفة عن هذا البلد العريق، مع التركيز على الموضوعية والشمولية.</p>
+                    <p>تغطي الموسوعة مواضيع متعددة مثل التاريخ، الجغرافيا، الثقافة، الاقتصاد، الشخصيات البارزة، والأحداث المهمة في اليمن.</p>
                 </div>
             </div>
             
@@ -434,6 +514,7 @@
                 <div class="faq-question">كيف يمكنني البحث عن مقالات؟</div>
                 <div class="faq-answer">
                     <p>يمكنك استخدام مربع البحث في الصفحة الرئيسية للبحث باستخدام الكلمات المفتاحية. كما يمكنك تصفح المقالات حسب التصنيفات أو استخدام الفلاتر المتاحة لتصفية النتائج حسب التاريخ أو الشعبية أو غيرها من المعايير.</p>
+                    <p>لتحسين نتائج البحث، ننصح باستخدام كلمات مفتاحية محددة وإضافة علامات الاقتباس للبحث عن عبارات كاملة.</p>
                 </div>
             </div>
             
@@ -441,6 +522,7 @@
                 <div class="faq-question">هل يمكنني تعديل أو إضافة مقالات؟</div>
                 <div class="faq-answer">
                     <p>نعم، نرحب بمساهمات المستخدمين بعد التسجيل في الموقع. جميع المساهمات تخضع لمراجعة من قبل فريق التحرير قبل النشر لضمان جودة المحتوى ودقته. يمكنك الاطلاع على سياسات التحرير وشروط المساهمة في الصفحة المخصصة لذلك.</p>
+                    <p>لضمان قبول مساهمتك، ننصح بالالتزام بمعايير الكتابة الموسوعية وتوثيق المعلومات من مصادر موثوقة.</p>
                 </div>
             </div>
             
@@ -448,6 +530,7 @@
                 <div class="faq-question">ما هي سياسة يمنبيديا تجاه حقوق النشر؟</div>
                 <div class="faq-answer">
                     <p>نحن نحترم حقوق الملكية الفكرية ونلتزم بقوانين حقوق النشر. معظم المحتوى متاح تحت رخصة المشاع الإبداعي (CC BY-SA 4.0) مع ضرورة الإشارة إلى المصدر. بعض المحتويات قد تكون خاضعة لقيود إضافية يتم ذكرها بوضوح.</p>
+                    <p>إذا كنت تعتقد أن هناك انتهاكًا لحقوق النشر، يرجى التواصل معنا عبر صفحة "اتصل بنا" مع تقديم التفاصيل اللازمة.</p>
                 </div>
             </div>
             
@@ -455,6 +538,7 @@
                 <div class="faq-question">كيف يتم التحقق من دقة المعلومات؟</div>
                 <div class="faq-answer">
                     <p>جميع المقالات تخضع لمراجعة دقيقة من قبل فريق التحرير والمتخصصين. نعتمد على مصادر موثوقة ونشير إليها في نهاية كل مقال. إذا وجدت أي خطأ، يمكنك استخدام زر "الإبلاغ عن خطأ" الموجود في كل مقال لإعلامنا.</p>
+                    <p>نقوم بتحديث المحتوى بشكل دوري لضمان دقته وحداثته، ونشجع القراء على إبلاغنا بأي معلومات قديمة أو غير دقيقة.</p>
                 </div>
             </div>
             
@@ -462,6 +546,7 @@
                 <div class="faq-question">هل يمكنني استخدام محتوى يمنبيديا في أبحاثي أو أعمالي؟</div>
                 <div class="faq-answer">
                     <p>نعم، يمكنك استخدام المحتوى لأغراض غير تجارية مع الإشارة إلى يمنبيديا كمصدر. للاستخدامات التجارية أو إعادة النشر الكبيرة، يرجى التواصل معنا للحصول على إذن مسبق.</p>
+                    <p>ننصح بالرجوع إلى الصفحة الأصلية في يمنبيديا للتأكد من أن المعلومات محدثة، حيث قد تكون هناك تحديثات بعد استخدامك للمحتوى.</p>
                 </div>
             </div>
             
@@ -469,18 +554,21 @@
                 <div class="faq-question">كيف يمكنني دعم يمنبيديا؟</div>
                 <div class="faq-answer">
                     <p>هناك عدة طرق لدعمنا: المساهمة بالمحتوى، التطوع للتدقيق والمراجعة، التبرع المالي، أو مجرد مشاركة المحتوى مع الآخرين. يمكنك زيارة صفحة "ادعمنا" للمزيد من التفاصيل.</p>
+                    <p>جميع أشكال الدعم تساعدنا في الحفاظ على الموسوعة وتطويرها لتقديم محتوى أفضل للجميع.</p>
                 </div>
             </div>
             
             <div class="contact-support">
-                <p>لم تجد إجابة لسؤالك؟</p>
-                <a href="/contact/" class="support-button">تواصل مع فريق الدعم <i class="fas fa-arrow-left"></i></a>
+                <p>لم تجد إجابة لسؤالك؟ فريق الدعم لدينا مستعد لمساعدتك</p>
+                <a href="/contact/" class="support-button">
+                    <i class="fas fa-headset"></i> تواصل مع الدعم
+                </a>
             </div>
         </div>
     </main>
 
     <!-- الفوتر -->
-        <footer>
+    <footer>
         <div class="footer-content">
             <div class="footer-col">
                 <div class="footer-logo"><i class="fas fa-book-open"></i> يَمَنِبِيدِيَا</div>
@@ -497,8 +585,8 @@
                 <div class="footer-links">
                     <h5>روابط سريعة</h5>
                     <ul>
-                        <li><a href="/"><i class="fas fa-chevron-left"></i> الرئيسية</a></li>
-                        <li><a href="/"><i class="fas fa-chevron-left"></i> جميع المقالات</a></li>
+                        <li><a href="{% url 'articles:article_list' %}"><i class="fas fa-chevron-left"></i> الرئيسية</a></li>
+                        <li><a href="{% url 'articles:categories_list' %}"><i class="fas fa-chevron-left"></i> التصنيفات</a></li>
                         <li><a href="/about/"><i class="fas fa-chevron-left"></i> عن الموسوعة</a></li>
                     </ul>
                 </div>
@@ -511,7 +599,6 @@
                         <li><a href="/contact/"><i class="fas fa-chevron-left"></i> اتصل بنا</a></li>
                         <li><a href="/faq/"><i class="fas fa-chevron-left"></i> الأسئلة الشائعة</a></li>
                         <li><a href="/privacy-policy/"><i class="fas fa-chevron-left"></i> سياسة الخصوصية</a></li>
-                        <li><a href="/terms/"><i class="fas fa-chevron-left"></i> شروط الاستخدام</a></li>
                     </ul>
                 </div>
             </div>
@@ -523,7 +610,6 @@
                         <li><a href="/contact/"><i class="fas fa-chevron-left"></i> المساهمة معنا</a></li>
                         <li><a href="/contact/"><i class="fas fa-chevron-left"></i> إرسال مقال</a></li>
                         <li><a href="/contact/"><i class="fas fa-chevron-left"></i> الإبلاغ عن خطأ</a></li>
-                        <li><a href="/contact/"><i class="fas fa-chevron-left"></i> دعم الموسوعة</a></li>
                     </ul>
                 </div>
             </div>
@@ -561,8 +647,56 @@
                     this.classList.toggle('active');
                     const answer = this.nextElementSibling;
                     answer.classList.toggle('show');
+                    
+                    // إغلاق الإجابات الأخرى عند فتح إجابة جديدة
+                    if (this.classList.contains('active')) {
+                        document.querySelectorAll('.faq-question').forEach(q => {
+                            if (q !== this && q.classList.contains('active')) {
+                                q.classList.remove('active');
+                                q.nextElementSibling.classList.remove('show');
+                            }
+                        });
+                    }
                 });
             });
+            
+            // فتح سؤال معين من خلال الرابط
+            const urlHash = window.location.hash;
+            if (urlHash) {
+                const targetQuestion = document.querySelector(urlHash);
+                if (targetQuestion && targetQuestion.classList.contains('faq-question')) {
+                    targetQuestion.classList.add('active');
+                    targetQuestion.nextElementSibling.classList.add('show');
+                    setTimeout(() => {
+                        targetQuestion.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }, 300);
+                }
+            }
+            
+            // تأثيرات الظهور التدريجي للعناصر
+            const animateOnScroll = function() {
+                const elements = document.querySelectorAll('.faq-item, .contact-support');
+                
+                elements.forEach((element, index) => {
+                    const elementPosition = element.getBoundingClientRect().top;
+                    const screenPosition = window.innerHeight / 1.2;
+                    
+                    if (elementPosition < screenPosition) {
+                        element.style.opacity = '1';
+                        element.style.transform = 'translateY(0)';
+                    }
+                });
+            };
+            
+            // تهيئة العناصر قبل الظهور
+            document.querySelectorAll('.faq-item, .contact-support').forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'all 0.6s cubic-bezier(0.25, 0.8, 0.25, 1)';
+            });
+            
+            window.addEventListener('scroll', animateOnScroll);
+            animateOnScroll(); // تشغيلها مرة عند التحميل
         });
     </script>
 </body>
