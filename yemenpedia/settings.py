@@ -9,7 +9,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-mb)@-w@en50p52b4qjj4(v(7=5*6jr5mt4$&bemzolla*+1#w-'
 DEBUG = False
-ALLOWED_HOSTS = ['yemenpedia-3.onrender.com']
+ALLOWED_HOSTS = ['yemenpedia-4.onrender.com']
 
 INSTALLED_APPS = [
         'grappelli',
