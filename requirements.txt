@@ -10,3 +10,5 @@ django-grappelli
 django_cron
 wikipedia
 django-environ
+cloudinary
+django-cloudinary-storage
