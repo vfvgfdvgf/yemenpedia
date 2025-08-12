@@ -21,7 +21,6 @@ INSTALLED_APPS = [
     'core',
     'dashboard',
     'django_cron',
-    'wikipedia',  # ضفت هنا التطبيق
 ]
 
 LOGIN_REDIRECT_URL = '/dashboard/profile/'  # مسار صفحة البروفايل الجديدة
