@@ -10,16 +10,10 @@ environ.Env.read_env(os.path.join(Path(__file__).resolve().parent.parent, '.env'
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# SECRET_KEY يجب أن يكون مخزن في ملف .env ولا يوضع صراحة في الكود
 SECRET_KEY = env('SECRET_KEY')
-
-# تحديد وضع التصحيح من متغير بيئي
 DEBUG = env('DEBUG')
-
-# استضافة الموقع (يمكن أن يكون قائمة فارغة أثناء التطوير)
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['localhost', '127.0.0.1'])
 
-# التطبيقات المثبتة
 INSTALLED_APPS = [
     'grappelli',
     'django.contrib.admin',
@@ -33,12 +27,12 @@ INSTALLED_APPS = [
     'contact.apps.ContactConfig',
     'core',
     'dashboard',
+    'cloudinary',               # إضافة Cloudinary
+    'cloudinary_storage',       # إضافة تخزين Cloudinary
 ]
 
-# بعد تسجيل الدخول إعادة التوجيه إلى هذا الرابط
 LOGIN_REDIRECT_URL = '/dashboard/profile/'
 
-# الوسائط الوسيطة - الوسطاء
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',  
@@ -51,11 +45,10 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'yemenpedia.urls'
 
-# إعدادات القوالب (Templates)
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],  # استخدم Path بدلاً من os.path.join
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -73,7 +66,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'yemenpedia.wsgi.application'
 
-# قواعد البيانات - استعمل متغيرات بيئية للمرونة
 DATABASES = {
     'default': {
         'ENGINE': env('DB_ENGINE', default='django.db.backends.sqlite3'),
@@ -89,23 +81,19 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
 
-# الإعدادات المحلية واللغات
 LANGUAGE_CODE = 'ar'
 TIME_ZONE = 'Asia/Riyadh'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
-# ملفات ثابتة (Static files)
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / 'static']  # أثناء التطوير
-STATIC_ROOT = BASE_DIR / 'staticfiles'    # لجمع الملفات في الإنتاج
+STATICFILES_DIRS = [BASE_DIR / 'static']
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-# ملفات الوسائط (Media files)
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-# إعدادات البريد الإلكتروني (تستخدم متغيرات بيئية)
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = env('EMAIL_HOST', default='smtp.gmail.com')
 EMAIL_PORT = env.int('EMAIL_PORT', default=587)
@@ -114,18 +102,14 @@ EMAIL_HOST_USER = env('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
-# إعدادات الأمان المتقدمة
 SECURE_CONTENT_TYPE_NOSNIFF = True
 X_FRAME_OPTIONS = 'DENY'
 SECURE_BROWSER_XSS_FILTER = True
 
-# جعل ملفات تعريف الارتباط آمنة فقط عند الاتصال عبر HTTPS (مهم في الإنتاج)
 CSRF_COOKIE_SECURE = env.bool('CSRF_COOKIE_SECURE', default=True)
 SESSION_COOKIE_SECURE = env.bool('SESSION_COOKIE_SECURE', default=True)
 
-# إعدادات رسائل Django
 from django.contrib.messages import constants as messages
-
 MESSAGE_TAGS = {
     messages.DEBUG: 'secondary',
     messages.INFO: 'info',
@@ -133,3 +117,12 @@ MESSAGE_TAGS = {
     messages.WARNING: 'warning',
     messages.ERROR: 'danger',
 }
+
+# إعدادات Cloudinary
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'dwitmgmaa',
+    'API_KEY': '371961478581534',
+    'API_SECRET': 'C-6cLRoKF8GnW7PgRJ_5VQVd7Qw',
+}
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
