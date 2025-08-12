@@ -23,6 +23,3 @@ urlpatterns = [
     path('faq/', views.faq_view, name='faq'),
     path('category/<slug:slug>/', views.category_article_list_view, name='category_articles'),
 ]
-
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
