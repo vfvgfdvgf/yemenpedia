@@ -9,3 +9,4 @@ psycopg2-binary   # لو تستخدم PostgreSQL
 django-grappelli
 django_cron
 wikipedia
+django-environ
